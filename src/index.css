@@ -8,6 +8,7 @@ body {
   font-family: 'Poppins', sans-serif;
   color: white;
   background-color: white;
+  overflow: auto;
 }
 
 code {

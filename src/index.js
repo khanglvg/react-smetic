@@ -3,12 +3,41 @@ import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap';
 import './index.css';
+import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
+import Header from './View/components/header';
+import Footer from './View/components/footer';
 import HomePage from './View/home-page';
-import * as serviceWorker from './serviceWorker';
+import NotFound from './View/components/not-found';
 
-ReactDOM.render(<HomePage/>, document.getElementById('root'));
+function renderHeader() {
+    return (
+      <Header/>
+    );
+}
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+function renderFooter() {
+    return (
+      <Footer/>
+    );
+}
+
+const routing = (
+  <Router>
+      {renderHeader()}
+      <div>
+          <Switch>
+              <Route exact path="/" component={HomePage}/>
+              {/*<Route exact path="/admin" component={AddMoreUniversity}/>*/}
+              {/*<Route exact path="/university/:universityId?"*/}
+              {/*       render={(props) =>*/}
+              {/*         <UniversityDetailPage {...props} />}/>*/}
+              <Route component={NotFound}/>
+          </Switch>
+      </div>
+
+      {renderFooter()}
+  </Router>
+);
+
+ReactDOM.render(routing, document.getElementById('root'));
+
