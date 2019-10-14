@@ -1,0 +1,53 @@
+.login-background-container {
+    background-color: var(--main-color);
+    color: black;
+    width: 100vw;
+    height: 100vh;
+    font-family: "Poppins", serif;
+}
+
+.login-container {
+    background-color: white;
+    border-radius: 10px;
+    min-width: 512px;
+    width: 40vw;
+    min-height: 360px;
+}
+
+.login-header {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    color: var(--main-color);
+}
+
+.login-header > h2 {
+    font-weight: 700;
+    font-size: 3rem;
+}
+
+.login-my-row {
+    min-height: 50px;
+}
+
+.login-my-title {
+    font-size: 1.3rem;
+}
+
+.login-my-btn {
+    border: 2px solid var(--main-color);
+    border-radius: 5px;
+    font-size: 1.6rem;
+    color: var(--main-color);
+    font-weight: 700;
+    min-height: 60px;
+    min-width: 200px;
+}
+
+.login-my-btn:hover {
+    background-color: var(--main-color);
+    color: white;
+}
+
+.login-btn-container{
+    height: 127px;
+}
