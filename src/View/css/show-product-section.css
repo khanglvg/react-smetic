@@ -1,0 +1,68 @@
+.section-show-products {
+    border-radius: 5px;
+    background-image: url("http://designarc.biz/demos/cake/theme/cake-html/img/welcome-bg.jpg");
+    min-height: calc(100vh - 64px);
+    max-height: calc(100vh - 64px);
+}
+
+.section-show-products:before {
+    content: "";
+    background: url(http://designarc.biz/demos/cake/theme/cake-html/img/w-left-techture.png) no-repeat scroll center center;
+    position: absolute;
+    left: 0;
+    top: 920px;
+    height: 685px;
+    width: 237px;
+    z-index: 1;
+}
+
+.section-show-products:after {
+    content: "";
+    background: url(http://designarc.biz/demos/cake/theme/cake-html/img/w-right-techture.png) no-repeat scroll center center;
+    position: absolute;
+    right: 0px;
+    top: 920px;
+    height: 701px;
+    width: 250px;
+    z-index: 1;
+}
+
+.show-products-header {
+    color: #5e3c3e;
+    min-height: 190px;
+}
+
+.show-products-header h3 {
+    font-family: 'Roboto Slab', sans-serif;
+}
+
+.show-products-header-break {
+    min-width: 500px;
+}
+
+.show-products-header-line {
+    width: 100px;
+    max-height: 2px;
+    border-top: 1px dotted #dddddd;
+}
+
+.show-products-card-container {
+    min-width: 1200px;
+}
+
+.show-products-card-view-more button {
+    background-color: var(--main-color);
+    min-width: 300px;
+    min-height: 64px;
+    border: 1px solid var(--main-color);
+    color: white;
+    border-radius: 5px;
+    font-weight: 300;
+    font-size: 1.4rem;
+    transition-duration: 300ms;
+}
+
+.show-products-card-view-more button:hover {
+    background-color: transparent;
+    color: var(--main-color);
+}
