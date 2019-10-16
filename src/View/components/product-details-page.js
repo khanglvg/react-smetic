@@ -17,7 +17,12 @@ class ProductDetails extends React.Component {
     async componentDidMount() {
         const {match: {params}} = this.props;
         this.productInfo = await apiModel.getProduct({productId: params.productId});
-        this.productInfo = this.productInfo[0];
+        if (this.productInfo && this.productInfo[0]) {
+            this.productInfo = this.productInfo[0];
+        }
+        else {
+            this.productInfo = {};
+        }
         this.setState({isLoadDone: true});
     }
 

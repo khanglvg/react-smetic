@@ -21,6 +21,7 @@ import ProductDetails from './View/components/product-details-page';
 import Checkout from './View/components/checkout';
 import CheckoutConfirmation
     from './View/components/checkout-confirmation';
+import OrderSuccess from './View/components/order-success';
 
 let isAuthenticated = false;
 
@@ -110,6 +111,7 @@ const r = (
                      render={(props) => <Checkout{...props}/>}/>
               <Route exact path="/checkout/confirmation"
                      render={(props) => <CheckoutConfirmation{...props}/>}/>
+              <Route exact path="/success" component={OrderSuccess}/>
               <Route component={NotFound}/>
           </Switch>
       </div>

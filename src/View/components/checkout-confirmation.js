@@ -4,10 +4,17 @@ import '../css/checkout-confirmation.css';
 import apiModel from '../../api/apiModel';
 import { numberWithCommas } from '../../utils/correct-money';
 
+const PATH = '/success';
+
 class CheckoutConfirmation extends React.Component {
     constructor(props) {
         super(props) ;
         this.userData = {};
+        this.handleClick = this.handleClick.bind(this);
+    }
+
+    handleClick() {
+        this.props.history.push(PATH);
     }
 
     async getUserInfo(userId) {
@@ -133,7 +140,7 @@ class CheckoutConfirmation extends React.Component {
                   <div
                     className="d-flex w-100 justify-content-center align-items-center place-order">
                       <button
-                        onClick={() => {}}
+                        onClick={this.handleClick}
                         className="d-flex btn w-100 align-items-center justify-content-around">
                           PLACE ORDER
                       </button>
