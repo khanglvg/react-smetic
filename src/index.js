@@ -18,6 +18,7 @@ import HomePage from './View/home-page';
 import NotFound from './View/components/not-found';
 import SearchResults from './View/components/search-results';
 import ProductDetails from './View/components/product-details-page';
+import Checkout from './View/components/checkout';
 
 let isAuthenticated = false;
 
@@ -103,6 +104,8 @@ const r = (
                      render={(props) => <SearchResults{...props}/>}/>
               <Route exact path="/product/:productId?"
                      render={(props) => <ProductDetails {...props} />}/>
+              <Route path="/checkout"
+                     render={(props) => <Checkout{...props}/>}/>
               <Route component={NotFound}/>
           </Switch>
       </div>

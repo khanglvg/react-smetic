@@ -3,6 +3,7 @@ import apiModel from '../../api/apiModel';
 import { DEFAULT_IMAGE } from '../../const';
 import '../css/product-details-page.css';
 import QuantitySelector from './fragments/quantity-selector';
+import { numberWithCommas } from '../../utils/correct-money';
 
 class ProductDetails extends React.Component {
     constructor(props) {
@@ -22,33 +23,37 @@ class ProductDetails extends React.Component {
 
     getDisplayProduct() {
         console.log(this.productInfo);
-        const imgScr = this.productInfo['HinhAnh'] ?
+        this.imgScr = this.productInfo['HinhAnh'] ?
           this.productInfo['HinhAnh'] :
           DEFAULT_IMAGE;
 
-        const productName = this.productInfo['TenSP'] ?
+        this.productName = this.productInfo['TenSP'] ?
           this.productInfo['TenSP'] :
           'Product name';
 
-        const productType = this.productInfo['TenLoaiSP'] ?
+        this.productType = this.productInfo['TenLoaiSP'] ?
           this.productInfo['TenLoaiSP'] :
           'Product type';
 
-        const description = this.productInfo['MoTa'] ?
+        this.description = this.productInfo['MoTa'] ?
           this.productInfo['MoTa'] :
           'Description';
 
-        const vendorName = this.productInfo['NguoiCungCap'] ?
+        this.vendorName = this.productInfo['NguoiCungCap'] ?
           this.productInfo['NguoiCungCap'] :
           'Vendor name';
 
-        const ageRange = this.productInfo['DoTuoi'] ?
+        this.ageRange = this.productInfo['DoTuoi'] ?
           this.productInfo['DoTuoi'] :
           'Age Range';
 
-        const skinType = this.productInfo['LoaiDa'] ?
+        this.skinType = this.productInfo['LoaiDa'] ?
           this.productInfo['LoaiDa'] :
           'Skin Type';
+
+        this.price = this.productInfo['GiaBan'] ?
+          this.productInfo['GiaBan'] :
+          'Unknown';
 
         const forMale = parseInt(this.productInfo['DanhChoNam']);
         const forFemale = parseInt(this.productInfo['DanhChoNu']);
@@ -82,14 +87,14 @@ class ProductDetails extends React.Component {
                        borderRadius: '5px',
                    }}>
                   <img className={'w-100 h-100'}
-                       src={imgScr}
+                       src={this.imgScr}
                        alt={'Product'}
                        style={{borderRadius: '5px'}}/>
               </div>
 
               <div className={'w-100 mt-3 pl-4'}>
                   <div>
-                      <h2>{productName}</h2>
+                      <h2>{this.productName}</h2>
                   </div>
 
                   <div className={'d-flex mt-4'}>
@@ -101,7 +106,7 @@ class ProductDetails extends React.Component {
                       </div>
                       <div className={'col-9'}>
                           <p>
-                              {productType}
+                              {this.productType}
                           </p>
                       </div>
                   </div>
@@ -115,7 +120,7 @@ class ProductDetails extends React.Component {
                       </div>
                       <div className={'col-9'}>
                           <p>
-                              {description}
+                              {this.description}
                           </p>
                       </div>
                   </div>
@@ -129,7 +134,7 @@ class ProductDetails extends React.Component {
                       </div>
                       <div className={'col-9'}>
                           <p>
-                              {vendorName}
+                              {this.vendorName}
                           </p>
                       </div>
                   </div>
@@ -143,7 +148,7 @@ class ProductDetails extends React.Component {
                       </div>
                       <div className={'col-9'}>
                           <p>
-                              {ageRange}
+                              {this.ageRange}
                           </p>
                       </div>
                   </div>
@@ -171,29 +176,67 @@ class ProductDetails extends React.Component {
                       </div>
                       <div className={'col-9'}>
                           <p>
-                              {skinType}
+                              {this.skinType}
                           </p>
                       </div>
                   </div>
 
-                  <div
-                    className={'d-flex pt-3 pl-3 pr-3 to-buy'}
-                    style={{
-                        minHeight: '60px',
-                        borderTop: '1px solid #eee',
-                    }}>
-                      <div className={'mr-5'}>
-                          <QuantitySelector/>
+                  <div style={{
+                      borderTop: '1px solid #eee',
+                  }}>
+                      <div className={'d-flex pl-0 pt-3'}
+                           style={{borderTop: '1px solid #eee'}}>
+                          <div className={'col-3 p-0 pt-1'}>
+                              <p className={'m-0'}>
+                                  {this.props.isEng ?
+                                    'Price:' :
+                                    'Giá bán:'}
+                              </p>
+                          </div>
+
+                          <div
+                            className={'col-9 pl-3 d-flex justify-content-start'}>
+                              <p className={'m-0'} style={{
+                                  color: 'red',
+                                  fontSize: '1.25rem',
+                              }}>
+                                  {numberWithCommas(this.price)} đ
+                              </p>
+                          </div>
                       </div>
-                      <button
-                        className="ml-4 d-flex btn w-100 align-items-center justify-content-around">
-                          ADD TO CART
-                      </button>
+                      <div
+                        className={'d-flex pt-3 pl-3 pr-3 to-buy'}
+                        style={{
+                            minHeight: '60px',
+                        }}>
+                          <div className={'mr-5'}>
+                              <QuantitySelector
+                                ref={c => this.selector = c}/>
+                          </div>
+                          <button
+                            onClick={this.handleAddToCart}
+                            className="ml-4 d-flex btn w-100 align-items-center justify-content-around">
+                              ADD TO CART
+                          </button>
+                      </div>
                   </div>
 
               </div>
           </div>
         );
+    };
+
+    handleAddToCart = () => {
+        let path = `/checkout`;
+        const props = {
+            imgScr: this.imgScr,
+            productName: this.productName,
+            vendorName: this.vendorName,
+            productQuantity: this.selector.getValue(),
+            price: this.price,
+            isEng: true,
+        };
+        this.props.history.push(path, props);
     };
 
     render() {

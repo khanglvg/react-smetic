@@ -8,6 +8,7 @@ class QuantitySelector extends React.Component {
         this.state = {value: 1};
         this.increment = this.increment.bind(this);
         this.decrement = this.decrement.bind(this);
+        this.getValue = this.getValue.bind(this);
     }
 
     increment() {
@@ -24,7 +25,12 @@ class QuantitySelector extends React.Component {
                 return {value: --state.value};
             });
         }
+    }
 
+    getValue() {
+        if(this.state.value) {
+            return this.state.value;
+        }
     }
 
     render() {

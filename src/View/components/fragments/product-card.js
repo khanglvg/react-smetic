@@ -1,11 +1,8 @@
 import React from 'react';
 import '../../css/product-card.css';
+import { numberWithCommas } from '../../../utils/correct-money';
 
 class ProductCard extends React.Component {
-    numberWithCommas(x) {
-        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-    }
-
     render() {
         const {imgScr, productId, productName, price, style} = this.props;
         return (
@@ -33,7 +30,7 @@ class ProductCard extends React.Component {
                       <div
                         className="mb-3 d-flex w-100 justify-content-center align-items-center show-products-card-info-price">
                           <span className="price">
-                              {this.numberWithCommas(price)}
+                              {numberWithCommas(price)}
                           </span>
                           <span
                             className="ml-1 currency">VND</span>
