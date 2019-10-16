@@ -6,13 +6,27 @@ import '../css/checkout.css';
 import NotFound from './not-found';
 
 class Checkout extends React.Component {
+    constructor(props) {
+        super(props);
+        this.totalPrice = 0;
+    }
+
+    handleClickBuy = () => {
+        let path = `/checkout/confirmation`;
+        const props = {
+            price: this.totalPrice,
+            userId: 'SM-133',
+        };
+        this.props.history.push(path, props);
+    };
+
     render() {
         if (!this.props.location.state) {
             return (<NotFound/>);
         }
 
         const {productName, vendorName, productQuantity, price, isEng} = this.props.location.state;
-        const totalPrice = parseInt(price) * parseInt(productQuantity);
+        this.totalPrice = parseInt(price) * parseInt(productQuantity);
         return (
           <div className={'w-100 h-100 checkout-cover'}>
               <div className="container p-0 pb-3 d-flex flex-wrap">
@@ -27,11 +41,12 @@ class Checkout extends React.Component {
                       </div>
 
                       <div className={'col-3 p-3'}>
-                          <TotalCard totalPrice={totalPrice}
+                          <TotalCard totalPrice={this.totalPrice}
                                      isEng={isEng}/>
                           <div
                             className="d-flex mt-3 w-100 justify-content-center align-items-center btn-buy">
                               <button
+                                onClick={this.handleClickBuy}
                                 className="d-flex btn w-100 align-items-center justify-content-around">
                                   BUY
                               </button>
