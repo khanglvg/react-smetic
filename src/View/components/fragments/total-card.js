@@ -5,7 +5,7 @@ class TotalCard extends React.Component {
     render() {
         const {totalPrice} = this.props;
         return (
-          <div className={'w-100 h-100'}
+          <div className={'w-100'}
                style={{
                    minHeight: '140px',
                    backgroundColor: 'white',

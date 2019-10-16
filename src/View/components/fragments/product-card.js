@@ -1,8 +1,23 @@
 import React from 'react';
 import '../../css/product-card.css';
 import { numberWithCommas } from '../../../utils/correct-money';
+import { withRouter } from 'react-router-dom';
 
 class ProductCard extends React.Component {
+    handleAddToCart = () => {
+        const {imgScr, productName, vendorName, price} = this.props;
+        let path = `/checkout`;
+        const props = {
+            imgScr: imgScr,
+            productName: productName,
+            vendorName: vendorName,
+            productQuantity: 1,
+            price: price,
+            isEng: true,
+        };
+        this.props.history.push(path, props);
+    };
+
     render() {
         const {imgScr, productId, productName, price, style} = this.props;
         return (
@@ -38,6 +53,7 @@ class ProductCard extends React.Component {
                       <div
                         className="d-flex w-100 justify-content-center align-items-center show-products-card-info-add-to-cart">
                           <button
+                            onClick={this.handleAddToCart}
                             className="d-flex btn w-100 align-items-center justify-content-around">
                               ADD TO CART
                           </button>
@@ -49,4 +65,4 @@ class ProductCard extends React.Component {
     }
 }
 
-export default ProductCard;
+export default withRouter(ProductCard);
