@@ -2,11 +2,14 @@ import React from 'react';
 import '../../css/product-card.css';
 
 class ProductCard extends React.Component {
+    numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    }
 
     render() {
-        const {imgScr, productName, price} = this.props;
+        const {imgScr, productId, productName, price, style} = this.props;
         return (
-          <div className="col-3 p-3">
+          <div className="col-3 p-3" style={{...style}}>
               <div className="show-products-card">
                   <div
                     className="show-products-card-img-container">
@@ -19,9 +22,10 @@ class ProductCard extends React.Component {
                   <div
                     className="w-100 show-products-card-info-container">
                       <div
-                        className="mt-3 mb-3 d-flex justify-content-center align-items-center show-products-card-info-title">
+                        className="mt-3 mb-3 pl-1 pr-1 text-center d-flex justify-content-center align-items-center show-products-card-info-title"
+                        style={{minHeight: '52px'}}>
                           <a
-                            href="https://www.facebook.com/pham.vy.3950"
+                            href={`/product/${productId}`}
                             target="_blank">
                               {productName}
                           </a>
@@ -29,7 +33,7 @@ class ProductCard extends React.Component {
                       <div
                         className="mb-3 d-flex w-100 justify-content-center align-items-center show-products-card-info-price">
                           <span className="price">
-                              {price}
+                              {this.numberWithCommas(price)}
                           </span>
                           <span
                             className="ml-1 currency">VND</span>

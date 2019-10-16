@@ -43,11 +43,20 @@
     min-width: 200px;
 }
 
+.login-error-msg {
+    color: red;
+    max-height: 20px;
+}
+
+.login-error-msg >p {
+    font-size: 0.8rem;
+}
+
 .login-my-btn:hover {
     background-color: var(--main-color);
     color: white;
 }
 
 .login-btn-container{
-    height: 127px;
+    height: 107px;
 }

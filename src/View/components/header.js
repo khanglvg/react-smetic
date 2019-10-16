@@ -1,9 +1,77 @@
 import React from 'react';
 import '../css/header.css';
 import Icon from './fragments/icon';
+import { withRouter } from 'react-router-dom';
 
 class Header extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            searchValue: '',
+        };
+    }
+
+    handleSearchValue = (e) => {
+        this.setState({searchValue: e.target.value});
+    };
+
+    handleSearch = () => {
+        const arr = this.state.searchValue.split(';');
+        let genderValue = [],
+          skinTypeValue = '',
+          ageRangeValue = {
+              minAge: 0,
+              maxAge: 100,
+          };
+        switch (arr.length) {
+            case 1: {
+                genderValue = arr[0];
+                break;
+            }
+            case 2: {
+                genderValue = arr[0];
+                skinTypeValue = arr[1].trim();
+                break;
+            }
+            case 3: {
+                genderValue = arr[0];
+                skinTypeValue = arr[1].trim();
+                const min = arr[2].split('-')[0];
+                const max = arr[2].split('-')[1];
+                ageRangeValue = {
+                    minAge: parseInt(min) ? min : 0,
+                    maxAge: parseInt(max) ? max : 100,
+                };
+                break;
+            }
+            default: break;
+        }
+        let forMale = false, forFemale = false;
+        if (genderValue.includes('cho'.toLowerCase())) {
+            genderValue = genderValue.replace('cho', '').trim();
+        }
+        if (genderValue.toLowerCase() === 'nam') {
+            forMale = true;
+        }
+        if (genderValue.toLowerCase() === 'nữ') {
+            forFemale = true;
+        }
+        console.log(forMale, forFemale, skinTypeValue, ageRangeValue.minAge, ageRangeValue.maxAge);
+
+
+        let path = `/search-result`;
+        const props = {
+            isForMale: forMale,
+            isForFemale: forFemale,
+            skinType: skinTypeValue,
+            minAge: ageRangeValue.minAge,
+            maxAge: ageRangeValue.maxAge,
+        };
+        this.props.history.push(path, props);
+    };
+
     render() {
+        const {searchValue} = this.state;
         return (
           <header className="App-header">
               <div
@@ -25,13 +93,13 @@ class Header extends React.Component {
                                 className="navbar-nav bd-navbar-nav flex-row justify-content-around align-items-center">
                                   <li className="nav-item">
                                       <a className="nav-link active"
-                                         href="Smetic.html"
+                                         href="/"
                                          onClick="">Home</a>
                                   </li>
                                   <li
                                     className="nav-item dropdown header-content-menu">
                                       <a className="nav-link "
-                                         href="/docs/4.3/getting-started/introduction/"
+                                         href="/"
                                          id="dropdownMenu"
                                          data-toggle="dropdown"
                                          aria-haspopup="true"
@@ -78,13 +146,13 @@ class Header extends React.Component {
                                   </li>
                                   <li className="nav-item">
                                       <a className="nav-link "
-                                         href="/docs/4.3/examples/"
+                                         href="/"
                                          onClick="ga('send', 'event', 'Navbar', 'Community links', 'Examples');">About
                                           Us</a>
                                   </li>
                                   <li className="nav-item">
                                       <a className="nav-link"
-                                         href="https://themes.getbootstrap.com/"
+                                         href="/"
                                          onClick="ga('send', 'event', 'Navbar', 'Community links', 'Themes');"
                                          target="_blank" rel="noopener">Contact
                                           Us</a>
@@ -103,10 +171,13 @@ class Header extends React.Component {
                                          className="form-control remove-outline"
                                          placeholder="What are you looking for?"
                                          aria-label="Recipient's username"
-                                         aria-describedby="basic-addon2"/>
+                                         aria-describedby="basic-addon2"
+                                         value={searchValue}
+                                         onChange={this.handleSearchValue}/>
                                   <div className="input-group-append">
                                       <button
                                         className="btn header-search-box-button remove-outline"
+                                        onClick={this.handleSearch}
                                         type="button">
                                           <Icon
                                             name={'searchIcon'}
@@ -125,10 +196,10 @@ class Header extends React.Component {
                                   <button
                                     className="btn w-100 d-flex justify-content-around align-items-center remove-outline">
                                       <Icon
-                                      name={'shoppingCart'}
-                                      width={20}
-                                      height={20}
-                                      color={'white'}/>
+                                        name={'shoppingCart'}
+                                        width={20}
+                                        height={20}
+                                        color={'white'}/>
                                       <span
                                         className="header-shopping-cart-title">
                                         Cart
@@ -185,4 +256,4 @@ class Header extends React.Component {
     }
 }
 
-export default Header;
+export default withRouter(Header);

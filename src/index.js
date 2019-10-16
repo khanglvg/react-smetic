@@ -5,23 +5,50 @@ import 'bootstrap';
 import './index.css';
 import {
     BrowserRouter as Router,
+    Redirect,
     Route,
     Switch,
+    useHistory,
+    useLocation,
 } from 'react-router-dom';
 import Header from './View/components/header';
 import Footer from './View/components/footer';
 import LoginPage from './View/components/login-page';
 import HomePage from './View/home-page';
 import NotFound from './View/components/not-found';
+import SearchResults from './View/components/search-results';
+import ProductDetails from './View/components/product-details-page';
 
 let isAuthenticated = false;
 
-function setAuthen(value) {
+
+// function PrivateRoute({ children, ...rest }) {
+//     return (
+//       <Route
+//         {...rest}
+//         render={({ location }) =>
+//           fakeAuth.isAuthenticated ? (
+//             children
+//           ) : (
+//             <Redirect
+//               to={{
+//                   pathname: "/login",
+//                   state: { from: location }
+//               }}
+//             />
+//           )
+//         }
+//       />
+//     );
+// }
+
+function setAuthentication(value) {
     isAuthenticated = value;
+    ReactDOM.render(routing, document.getElementById('root'));
 }
 
 function renderLoginPage() {
-    return (<LoginPage/>);
+    return (<LoginPage authenCallback={setAuthentication.bind(this)}/>);
 }
 
 function renderHeader() {
@@ -33,35 +60,119 @@ function renderFooter() {
 }
 
 function renderContent() {
-    return (
-      <div>
-          {renderHeader()}
-          <div>
-              <Switch>
-                  <Route exact path="/" component={HomePage}/>
-                  {/*<Route exact path="/admin" component={AddMoreUniversity}/>*/}
-                  {/*<Route exact path="/university/:universityId?"*/}
-                  {/*       render={(props) =>*/}
-                  {/*         <UniversityDetailPage {...props} />}/>*/}
-                  <Route component={NotFound}/>
-              </Switch>
-          </div>
-          {renderFooter()}
-      </div>
-    );
+    // return (
+    //   <div>
+    //       {renderHeader()}
+    //       <div>
+    //           <Switch>
+    //               <Redirect exact from="/" to="searchDashboard" />
+    //               <Route path="/login">
+    //                   <LoginPage />
+    //               </Route>
+    //               <PrivateRoute path="/protected">
+    //                   <ProtectedPage />
+    //               </PrivateRoute>
+    //               <Route exact path="/" component={HomePage}/>
+    //               {/*<Route exact path="/admin" component={AddMoreUniversity}/>*/}
+    //               {/*<Route exact path="/university/:universityId?"*/}
+    //               {/*       render={(props) =>*/}
+    //               {/*         <UniversityDetailPage {...props} />}/>*/}
+    //               <Route component={NotFound}/>
+    //           </Switch>
+    //       </div>
+    //       {renderFooter()}
+    //   </div>
+    // );
 }
 
-const routing = (
-  <Router>
-      {
-          !isAuthenticated ?
-            renderLoginPage()
-            :
-            renderContent()
-      }
+const fakeAuth = {
+    isAuthenticated: false,
+    authenticate(cb) {
+        fakeAuth.isAuthenticated = true;
+        setTimeout(cb, 100); // fake async
+    },
+};
 
+const r = (
+  <Router>
+      {renderHeader()}
+      <div>
+          <Switch>
+              <Route exact path="/" component={HomePage}/>
+              <Route path="/search-result"
+                     render={(props) => <SearchResults{...props}/>}/>
+              <Route exact path="/product/:productId?"
+                     render={(props) => <ProductDetails {...props} />}/>
+              <Route component={NotFound}/>
+          </Switch>
+      </div>
+      {renderFooter()}
   </Router>
 );
 
-ReactDOM.render(routing, document.getElementById('root'));
+const routing = (
+  <Router>
+      <Switch>
+          <Route path="/login">
+              <Login />
+          </Route>
+          <PrivateRoute path="/p">
+              <Router>
+                  {renderHeader()}
+                  <div>
+                      <Switch>
+                          <Route path="/home" component={HomePage}/>
+                          <Route path="/search-result"
+                                 render={(props) => <SearchResults{...props}/>}/>
+                          <Route exact path="/product/:productId?"
+                                 render={(props) => <ProductDetails {...props} />}/>
+                          <Route component={NotFound}/>
+                      </Switch>
+                  </div>
+                  {renderFooter()}
+              </Router>
+          </PrivateRoute>
+      </Switch>
+  </Router>
+);
+
+function PrivateRoute({children, ...rest}) {
+    return (
+      <Route
+        {...rest}
+        render={({location}) =>
+          fakeAuth.isAuthenticated ?
+            (
+              children
+            ) :
+            (
+              <Redirect
+                to={{
+                    pathname: '/login',
+                    state: {from: location},
+                }}
+              />
+            )
+        }
+      />
+    );
+}
+
+function Login() {
+    let history = useHistory();
+    let location = useLocation();
+
+    let {from} = location.state || {from: {pathname: '/p/home'}};
+    let login = () => {
+        fakeAuth.authenticate(() => {
+            history.replace(from);
+        });
+    };
+
+    return (
+      <LoginPage onClick={login}/>
+    );
+}
+
+ReactDOM.render(r, document.getElementById('root'));
 
