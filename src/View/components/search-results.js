@@ -20,7 +20,7 @@ class SearchResults extends React.Component {
     }
 
     getSearchInfo() {
-        if(!this.props.location && !this.props.location.state) {
+        if(!this.props.location.state) {
             this.searchInfo = {};
         }
         else {
@@ -128,6 +128,11 @@ class SearchResults extends React.Component {
             this.getSearchInfo();
             this.refresh().then(r => this.forceUpdate());
         }
+
+        if (!this.props.location.state) {
+            return (<NotFound/>);
+        }
+        
         return (
           <div
             className="container p-0 pb-3 d-flex flex-wrap"

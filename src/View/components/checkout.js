@@ -3,9 +3,14 @@ import ProductCart from './fragments/product-cart';
 import TotalCard from './fragments/total-card';
 import { withRouter } from 'react-router-dom';
 import '../css/checkout.css';
+import NotFound from './not-found';
 
 class Checkout extends React.Component {
     render() {
+        if (!this.props.location.state) {
+            return (<NotFound/>);
+        }
+
         const {productName, vendorName, productQuantity, price, isEng} = this.props.location.state;
         const totalPrice = parseInt(price) * parseInt(productQuantity);
         return (
