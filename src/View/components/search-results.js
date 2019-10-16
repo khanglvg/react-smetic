@@ -9,19 +9,30 @@ const NOT_FOUND = 'Không tìm thấy sản phẩm phù hợp';
 
 class SearchResults extends React.Component {
     constructor(props) {
-        console.log(props)
+        console.log(props);
         super(props);
         this.state = {
             isLoadDone: false,
         };
-        this.searchInfo = {
-            isForMale: this.props.location.state.isForMale,
-            isForFemale: this.props.location.state.isForFemale,
-            skinType: this.props.location.state.skinType,
-            minAge: this.props.location.state.minAge,
-            maxAge: this.props.location.state.maxAge,
-        }
+
+        this.oldKey= '';
+        this.getSearchInfo();
     }
+
+    getSearchInfo() {
+        if(!this.props.location && !this.props.location.state) {
+            this.searchInfo = {};
+        }
+        else {
+            this.searchInfo = {
+                isForMale: this.props.location.state.isForMale,
+                isForFemale: this.props.location.state.isForFemale,
+                skinType: this.props.location.state.skinType,
+                minAge: this.props.location.state.minAge,
+                maxAge: this.props.location.state.maxAge,
+            };
+        }
+    };
 
     async getData() {
         return await apiModel.getProductBySearch({
@@ -56,8 +67,7 @@ class SearchResults extends React.Component {
                         if (splited) {
                             const min = splited[0];
                             const max = splited[1];
-                            if(!(max < parseInt(minAge)) && !(min > parseInt(maxAge))) {
-                                console.log(min, max, minAge, maxAge, !(max < parseInt(minAge)), !(min > parseInt(maxAge)));
+                            if (!(max < parseInt(minAge)) && !(min > parseInt(maxAge))) {
                                 return element;
                             }
                             // if (min >= parseInt(minAge) && max <= parseInt(maxAge)) {
@@ -81,11 +91,16 @@ class SearchResults extends React.Component {
                       filterAge[i]['GiaBan'] :
                       null;
 
+                    const vendorName = filterAge[i]['NguoiCungCap'] ?
+                      filterAge[i]['NguoiCungCap'] :
+                      null;
+
                     res.push(
                       <ProductCard
                         productId={productId}
                         imgScr={imgScr}
                         productName={productName}
+                        vendorName={vendorName}
                         price={price}
                         style={{marginTop: '30px'}}
                       />,
@@ -102,7 +117,17 @@ class SearchResults extends React.Component {
         return res;
     }
 
+    async refresh () {
+        this.data = await this.getData();
+    };
+
     render() {
+        // For refresh page
+        if(this.state.isLoadDone && this.props.location.key !== this.oldKey) {
+            this.oldKey = this.props.location.key;
+            this.getSearchInfo();
+            this.refresh().then(r => this.forceUpdate());
+        }
         return (
           <div
             className="container p-0 pb-3 d-flex flex-wrap"

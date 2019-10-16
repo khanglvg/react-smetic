@@ -3,6 +3,8 @@ import '../css/header.css';
 import Icon from './fragments/icon';
 import { withRouter } from 'react-router-dom';
 
+const SEARCH_PATH = '/search-result';
+
 class Header extends React.Component {
     constructor(props) {
         super(props);
@@ -56,10 +58,7 @@ class Header extends React.Component {
         if (genderValue.toLowerCase() === 'nữ') {
             forFemale = true;
         }
-        console.log(forMale, forFemale, skinTypeValue, ageRangeValue.minAge, ageRangeValue.maxAge);
 
-
-        let path = `/search-result`;
         const props = {
             isForMale: forMale,
             isForFemale: forFemale,
@@ -67,7 +66,13 @@ class Header extends React.Component {
             minAge: ageRangeValue.minAge,
             maxAge: ageRangeValue.maxAge,
         };
-        this.props.history.push(path, props);
+
+        if(this.props.location.pathname === SEARCH_PATH) {
+            this.props.history.replace(SEARCH_PATH, props);
+        }
+        else {
+            this.props.history.push(SEARCH_PATH, props);
+        }
     };
 
     render() {
