@@ -4,6 +4,7 @@ import ProductCard from './fragments/product-card';
 import NotFound from './not-found';
 import { DEFAULT_IMAGE } from '../../const';
 import { withRouter } from 'react-router-dom';
+import LoadingScreen from 'react-loading-screen';
 
 const NOT_FOUND = 'Không tìm thấy sản phẩm phù hợp';
 
@@ -12,15 +13,15 @@ class SearchResults extends React.Component {
         console.log(props);
         super(props);
         this.state = {
-            isLoadDone: false,
+            isLoading: true,
         };
 
-        this.oldKey= '';
+        this.oldKey = '';
         this.getSearchInfo();
     }
 
     getSearchInfo() {
-        if(!this.props.location.state) {
+        if (!this.props.location.state) {
             this.searchInfo = {};
         }
         else {
@@ -35,6 +36,10 @@ class SearchResults extends React.Component {
     };
 
     async getData() {
+        this.setState({
+            isLoading: true,
+        });
+
         return await apiModel.getProductBySearch({
             isForMale: this.searchInfo.isForMale,
             isForFemale: this.searchInfo.isForFemale,
@@ -44,9 +49,14 @@ class SearchResults extends React.Component {
 
     async componentDidMount() {
         this.data = await this.getData();
-        console.log(this.data);
-        this.setState({isLoadDone: true});
+        this.loadingAnim();
     }
+
+    loadingAnim = () => {
+        setTimeout(() => {
+            this.setState({isLoading: false});
+        }, 500);
+    };
 
     getDisplayProducts() {
         let res = [];
@@ -80,30 +90,30 @@ class SearchResults extends React.Component {
                     const productId = filterAge[i]['MaSP'];
 
                     const imgScr = filterAge[i]['HinhAnh'] ?
-                      filterAge[i]['HinhAnh'] :
-                      DEFAULT_IMAGE;
+                        filterAge[i]['HinhAnh'] :
+                        DEFAULT_IMAGE;
 
                     const productName = filterAge[i]['TenSP'] ?
-                      filterAge[i]['TenSP'] :
-                      null;
+                        filterAge[i]['TenSP'] :
+                        null;
 
                     const price = filterAge[i]['GiaBan'] ?
-                      filterAge[i]['GiaBan'] :
-                      null;
+                        filterAge[i]['GiaBan'] :
+                        null;
 
                     const vendorName = filterAge[i]['NguoiCungCap'] ?
-                      filterAge[i]['NguoiCungCap'] :
-                      null;
+                        filterAge[i]['NguoiCungCap'] :
+                        null;
 
                     res.push(
-                      <ProductCard
-                        productId={productId}
-                        imgScr={imgScr}
-                        productName={productName}
-                        vendorName={vendorName}
-                        price={price}
-                        style={{marginTop: '30px'}}
-                      />,
+                        <ProductCard
+                            productId={productId}
+                            imgScr={imgScr}
+                            productName={productName}
+                            vendorName={vendorName}
+                            price={price}
+                            style={{marginTop: '30px'}}
+                        />,
                     );
                 }
             }
@@ -117,36 +127,42 @@ class SearchResults extends React.Component {
         return res;
     }
 
-    async refresh () {
+    async refresh() {
         this.data = await this.getData();
+        this.loadingAnim();
     };
 
     render() {
         // For refresh page
-        if(this.state.isLoadDone && this.props.location.key !== this.oldKey) {
+        if (!this.state.isLoading && this.props.location.key !== this.oldKey) {
             this.oldKey = this.props.location.key;
             this.getSearchInfo();
-            this.refresh().then(r => this.forceUpdate());
+            this.refresh();
         }
 
         if (!this.props.location.state) {
             return (<NotFound/>);
         }
-        
+
+        const {isLoading} = this.state;
         return (
-          <div
-            className="container p-0 pb-3 d-flex flex-wrap"
-            style={{
-                minWidth: '1200px',
-                minHeight: '700px',
-                marginTop: '64px',
-            }}>
-              {
-                  this.state.isLoadDone ?
-                    this.getDisplayProducts() :
-                    'Loading'
-              }
-          </div>
+            <div
+                className="container p-0 pb-3 d-flex flex-wrap"
+                style={{
+                    minWidth: '1200px',
+                    minHeight: '700px',
+                    marginTop: '64px',
+                }}>
+                <LoadingScreen
+                    loading={isLoading}
+                    bgColor="#f1f1f1"
+                    spinnerColor="#9ee5f8"
+                    textColor="#676767"
+                    logoSrc={'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/250px-React-icon.svg.png'}
+                    text="Loading..."
+                />
+                {this.getDisplayProducts()}
+            </div>
         );
     }
 }
