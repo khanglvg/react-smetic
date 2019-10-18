@@ -1,5 +1,5 @@
 export function getDisplayTime(timestamp, hasHour = true) {
-    const d = new Date(timestamp);
+    const d = new Date(parseInt(timestamp));
     if (d) {
         let h = d.getHours();
         let m = d.getMinutes();
