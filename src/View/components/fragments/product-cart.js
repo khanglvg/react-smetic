@@ -3,8 +3,14 @@ import { DEFAULT_IMAGE } from '../../../const';
 import { numberWithCommas } from '../../../utils/correct-money';
 
 class ProductCart extends React.Component {
+    handleImgClick = () => {
+        const a = document.createElement('a');
+        a.href = `/product/${this.props.productId}`;
+        a.click();
+    };
+
     render() {
-        const {productName, vendorName, price, productQuantity} = this.props;
+        const {productName, imgSrc, vendorName, price, productQuantity} = this.props;
 
         return (
           <div className={'d-flex p-0 m-0'}
@@ -26,7 +32,8 @@ class ProductCart extends React.Component {
                         height: '100%',
                         borderRadius: '5px',
                     }}
-                    src={DEFAULT_IMAGE}
+                    src={imgSrc}
+                    onClick={this.handleImgClick}
                     alt={'Checkout cart img'}/>
               </div>
 

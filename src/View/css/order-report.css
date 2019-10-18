@@ -1,0 +1,11 @@
+.order-report-cover {
+    background-color: #eee;
+    margin-top: 64px;
+    min-height: 700px;
+    color: black;
+}
+
+.select-status-view {
+    border-bottom: 1px solid #d8d8d8;
+}
+

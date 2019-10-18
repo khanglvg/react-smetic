@@ -78,7 +78,8 @@ class CheckoutConfirmation extends React.Component {
                       </div>
                       <div className={'col-6'}>
                           <input className={'my-text-input'}
-                                 value={userPhone}/>
+                                 value={userPhone}
+                          onChange={() => {}}/>
                       </div>
                   </div>
 
@@ -92,7 +93,8 @@ class CheckoutConfirmation extends React.Component {
                       </div>
                       <div className={'col-6'}>
                           <input className={'my-text-input'}
-                                 value={deliveryAddress}/>
+                                 value={deliveryAddress}
+                                 onChange={() => {}}/>
                       </div>
                   </div>
 

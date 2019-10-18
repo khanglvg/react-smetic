@@ -29,36 +29,40 @@ class ProductDetails extends React.Component {
     getDisplayProduct() {
         console.log(this.productInfo);
         this.imgScr = this.productInfo['HinhAnh'] ?
-          this.productInfo['HinhAnh'] :
-          DEFAULT_IMAGE;
+            this.productInfo['HinhAnh'] :
+            DEFAULT_IMAGE;
+
+        this.productId = this.productInfo['MaSP'] ?
+            this.productInfo['MaSP'] :
+            'Product Id';
 
         this.productName = this.productInfo['TenSP'] ?
-          this.productInfo['TenSP'] :
-          'Product name';
+            this.productInfo['TenSP'] :
+            'Product name';
 
         this.productType = this.productInfo['TenLoaiSP'] ?
-          this.productInfo['TenLoaiSP'] :
-          'Product type';
+            this.productInfo['TenLoaiSP'] :
+            'Product type';
 
         this.description = this.productInfo['MoTa'] ?
-          this.productInfo['MoTa'] :
-          'Description';
+            this.productInfo['MoTa'] :
+            'Description';
 
         this.vendorName = this.productInfo['NguoiCungCap'] ?
-          this.productInfo['NguoiCungCap'] :
-          'Vendor name';
+            this.productInfo['NguoiCungCap'] :
+            'Vendor name';
 
         this.ageRange = this.productInfo['DoTuoi'] ?
-          this.productInfo['DoTuoi'] :
-          'Age Range';
+            this.productInfo['DoTuoi'] :
+            'Age Range';
 
         this.skinType = this.productInfo['LoaiDa'] ?
-          this.productInfo['LoaiDa'] :
-          'Skin Type';
+            this.productInfo['LoaiDa'] :
+            'Skin Type';
 
         this.price = this.productInfo['GiaBan'] ?
-          this.productInfo['GiaBan'] :
-          'Unknown';
+            this.productInfo['GiaBan'] :
+            'Unknown';
 
         const forMale = parseInt(this.productInfo['DanhChoNam']);
         const forFemale = parseInt(this.productInfo['DanhChoNu']);
@@ -79,155 +83,155 @@ class ProductDetails extends React.Component {
 
 
         return (
-          <div className={'d-flex p-0 m-0 mt-5 w-100'} style={{
-              color: 'black',
-              fontSize: '1.25rem',
-          }}>
-              <div className={'d-flex'}
-                   style={{
-                       maxWidth: '390px',
-                       minWidth: '390px',
-                       minHeight: '390px',
-                       maxHeight: '390px',
-                       borderRadius: '5px',
-                   }}>
-                  <img className={'w-100 h-100'}
-                       src={this.imgScr}
-                       alt={'Product'}
-                       style={{borderRadius: '5px'}}/>
-              </div>
+            <div className={'d-flex p-0 m-0 mt-5 w-100'} style={{
+                color: 'black',
+                fontSize: '1.25rem',
+            }}>
+                <div className={'d-flex'}
+                     style={{
+                         maxWidth: '390px',
+                         minWidth: '390px',
+                         minHeight: '390px',
+                         maxHeight: '390px',
+                         borderRadius: '5px',
+                     }}>
+                    <img className={'w-100 h-100'}
+                         src={this.imgScr}
+                         alt={'Product'}
+                         style={{borderRadius: '5px'}}/>
+                </div>
 
-              <div className={'w-100 mt-3 pl-4'}>
-                  <div>
-                      <h2>{this.productName}</h2>
-                  </div>
+                <div className={'w-100 mt-3 pl-4'}>
+                    <div>
+                        <h2>{this.productName}</h2>
+                    </div>
 
-                  <div className={'d-flex mt-4'}>
-                      <div className={'col-3 p-0'}>
-                          <p
-                            className={'font-italic'}>{this.state.isEng ?
-                            'Product type:' :
-                            'Loại sản phẩm:'}</p>
-                      </div>
-                      <div className={'col-9'}>
-                          <p>
-                              {this.productType}
-                          </p>
-                      </div>
-                  </div>
+                    <div className={'d-flex mt-4'}>
+                        <div className={'col-3 p-0'}>
+                            <p
+                                className={'font-italic'}>{this.state.isEng ?
+                                'Product type:' :
+                                'Loại sản phẩm:'}</p>
+                        </div>
+                        <div className={'col-9'}>
+                            <p>
+                                {this.productType}
+                            </p>
+                        </div>
+                    </div>
 
-                  <div className={'d-flex'}>
-                      <div className={'col-3 p-0'}>
-                          <p
-                            className={'font-italic'}>{this.state.isEng ?
-                            'Description:' :
-                            'Mô tả:'}</p>
-                      </div>
-                      <div className={'col-9'}>
-                          <p>
-                              {this.description}
-                          </p>
-                      </div>
-                  </div>
+                    <div className={'d-flex'}>
+                        <div className={'col-3 p-0'}>
+                            <p
+                                className={'font-italic'}>{this.state.isEng ?
+                                'Description:' :
+                                'Mô tả:'}</p>
+                        </div>
+                        <div className={'col-9'}>
+                            <p>
+                                {this.description}
+                            </p>
+                        </div>
+                    </div>
 
-                  <div className={'d-flex'}>
-                      <div className={'col-3 p-0'}>
-                          <p
-                            className={'font-italic'}>{this.state.isEng ?
-                            'Vendor Name:' :
-                            'Nhà cung cấp:'}</p>
-                      </div>
-                      <div className={'col-9'}>
-                          <p>
-                              {this.vendorName}
-                          </p>
-                      </div>
-                  </div>
+                    <div className={'d-flex'}>
+                        <div className={'col-3 p-0'}>
+                            <p
+                                className={'font-italic'}>{this.state.isEng ?
+                                'Vendor Name:' :
+                                'Nhà cung cấp:'}</p>
+                        </div>
+                        <div className={'col-9'}>
+                            <p>
+                                {this.vendorName}
+                            </p>
+                        </div>
+                    </div>
 
-                  <div className={'d-flex'}>
-                      <div className={'col-3 p-0'}>
-                          <p
-                            className={'font-italic'}>{this.state.isEng ?
-                            'Age Range:' :
-                            'Độ tuổi:'}</p>
-                      </div>
-                      <div className={'col-9'}>
-                          <p>
-                              {this.ageRange}
-                          </p>
-                      </div>
-                  </div>
+                    <div className={'d-flex'}>
+                        <div className={'col-3 p-0'}>
+                            <p
+                                className={'font-italic'}>{this.state.isEng ?
+                                'Age Range:' :
+                                'Độ tuổi:'}</p>
+                        </div>
+                        <div className={'col-9'}>
+                            <p>
+                                {this.ageRange}
+                            </p>
+                        </div>
+                    </div>
 
-                  <div className={'d-flex'}>
-                      <div className={'col-3 p-0'}>
-                          <p
-                            className={'font-italic'}>{this.state.isEng ?
-                            'Gender:' :
-                            'Dành cho:'}</p>
-                      </div>
-                      <div className={'col-9'}>
-                          <p>
-                              {genderDisplay}
-                          </p>
-                      </div>
-                  </div>
+                    <div className={'d-flex'}>
+                        <div className={'col-3 p-0'}>
+                            <p
+                                className={'font-italic'}>{this.state.isEng ?
+                                'Gender:' :
+                                'Dành cho:'}</p>
+                        </div>
+                        <div className={'col-9'}>
+                            <p>
+                                {genderDisplay}
+                            </p>
+                        </div>
+                    </div>
 
-                  <div className={'d-flex'}>
-                      <div className={'col-3 p-0'}>
-                          <p
-                            className={'font-italic'}>{this.state.isEng ?
-                            'Skin Type:' :
-                            'Loại da:'}</p>
-                      </div>
-                      <div className={'col-9'}>
-                          <p>
-                              {this.skinType}
-                          </p>
-                      </div>
-                  </div>
+                    <div className={'d-flex'}>
+                        <div className={'col-3 p-0'}>
+                            <p
+                                className={'font-italic'}>{this.state.isEng ?
+                                'Skin Type:' :
+                                'Loại da:'}</p>
+                        </div>
+                        <div className={'col-9'}>
+                            <p>
+                                {this.skinType}
+                            </p>
+                        </div>
+                    </div>
 
-                  <div style={{
-                      borderTop: '1px solid #eee',
-                  }}>
-                      <div className={'d-flex pl-0 pt-3'}
-                           style={{borderTop: '1px solid #eee'}}>
-                          <div className={'col-3 p-0 pt-1'}>
-                              <p className={'m-0'}>
-                                  {this.props.isEng ?
-                                    'Price:' :
-                                    'Giá bán:'}
-                              </p>
-                          </div>
+                    <div style={{
+                        borderTop: '1px solid #eee',
+                    }}>
+                        <div className={'d-flex pl-0 pt-3'}
+                             style={{borderTop: '1px solid #eee'}}>
+                            <div className={'col-3 p-0 pt-1'}>
+                                <p className={'m-0'}>
+                                    {this.props.isEng ?
+                                        'Price:' :
+                                        'Giá bán:'}
+                                </p>
+                            </div>
 
-                          <div
-                            className={'col-9 pl-3 d-flex justify-content-start'}>
-                              <p className={'m-0'} style={{
-                                  color: 'red',
-                                  fontSize: '1.25rem',
-                              }}>
-                                  {numberWithCommas(this.price)} đ
-                              </p>
-                          </div>
-                      </div>
-                      <div
-                        className={'d-flex pt-3 pl-3 pr-3 to-buy'}
-                        style={{
-                            minHeight: '60px',
-                        }}>
-                          <div className={'mr-5'}>
-                              <QuantitySelector
-                                ref={c => this.selector = c}/>
-                          </div>
-                          <button
-                            onClick={this.handleAddToCart}
-                            className="ml-4 d-flex btn w-100 align-items-center justify-content-around">
-                              ADD TO CART
-                          </button>
-                      </div>
-                  </div>
+                            <div
+                                className={'col-9 pl-3 d-flex justify-content-start'}>
+                                <p className={'m-0'} style={{
+                                    color: 'red',
+                                    fontSize: '1.25rem',
+                                }}>
+                                    {numberWithCommas(this.price)} đ
+                                </p>
+                            </div>
+                        </div>
+                        <div
+                            className={'d-flex pt-3 pl-3 pr-3 to-buy'}
+                            style={{
+                                minHeight: '60px',
+                            }}>
+                            <div className={'mr-5'}>
+                                <QuantitySelector
+                                    ref={c => this.selector = c}/>
+                            </div>
+                            <button
+                                onClick={this.handleAddToCart}
+                                className="ml-4 d-flex btn w-100 align-items-center justify-content-around">
+                                ADD TO CART
+                            </button>
+                        </div>
+                    </div>
 
-              </div>
-          </div>
+                </div>
+            </div>
         );
     };
 
@@ -235,6 +239,7 @@ class ProductDetails extends React.Component {
         let path = `/checkout`;
         const props = {
             imgScr: this.imgScr,
+            productId: this.productId,
             productName: this.productName,
             vendorName: this.vendorName,
             productQuantity: this.selector.getValue(),
@@ -246,19 +251,19 @@ class ProductDetails extends React.Component {
 
     render() {
         return (
-          <div
-            className="container p-0 pb-3 d-flex flex-wrap"
-            style={{
-                minWidth: '1200px',
-                minHeight: '700px',
-                marginTop: '64px',
-            }}>
-              {
-                  this.state.isLoadDone ?
-                    this.getDisplayProduct() :
-                    'Loading'
-              }
-          </div>
+            <div
+                className="container p-0 pb-3 d-flex flex-wrap"
+                style={{
+                    minWidth: '1200px',
+                    minHeight: '700px',
+                    marginTop: '64px',
+                }}>
+                {
+                    this.state.isLoadDone ?
+                        this.getDisplayProduct() :
+                        'Loading'
+                }
+            </div>
         );
     }
 }

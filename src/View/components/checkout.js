@@ -25,7 +25,7 @@ class Checkout extends React.Component {
             return (<NotFound/>);
         }
 
-        const {productName, vendorName, productQuantity, price, isEng} = this.props.location.state;
+        const {imgSrc, productId, productName, vendorName, productQuantity, price, isEng} = this.props.location.state;
         this.totalPrice = parseInt(price) * parseInt(productQuantity);
         return (
           <div className={'w-100 h-100 checkout-cover'}>
@@ -34,6 +34,8 @@ class Checkout extends React.Component {
                       <div className={'col-9 p-3'}>
                           <ProductCart
                             isEng={isEng}
+                            productId={productId}
+                            imgSrc={imgSrc}
                             productName={productName}
                             vendorName={vendorName}
                             productQuantity={productQuantity}

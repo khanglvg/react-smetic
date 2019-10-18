@@ -40,10 +40,22 @@ class OrderStatusCard extends React.Component {
         );
     };
 
+    handleImgClick = () => {
+        const a = document.createElement('a');
+        a.href = `/product/${this.props.productId}`;
+        a.target = '_blank';
+        a.click();
+    };
+
+    handleClick = () => {
+
+    };
+
     render() {
         const {
             orderId,
             imScr,
+            productId,
             productName,
             userName,
             deliveryAddress,
@@ -51,6 +63,7 @@ class OrderStatusCard extends React.Component {
             totalPrice,
             productCount,
             productPrice,
+            creatingDate,
             isEng,
         } = this.props;
 
@@ -68,8 +81,10 @@ class OrderStatusCard extends React.Component {
                             width: '100%',
                             height: '100%',
                             borderRadius: '5px',
+                            cursor: 'pointer'
                         }}
                         src={imScr}
+                        onClick={this.handleImgClick}
                         alt={'order status card'}/>
                 </div>
 
@@ -92,14 +107,18 @@ class OrderStatusCard extends React.Component {
                             {/*    }*/}
                             {/*</p>*/}
                             <p className={'m-0 font-italic'}
-                               style={{color: '#7a7a7a', letterSpacing: '0.08rem'}}>{getDisplayTime(1571421193000)}</p>
+                               style={{
+                                   color: '#7a7a7a',
+                                   letterSpacing: '0.08rem',
+                               }}>{getDisplayTime(creatingDate)}</p>
                         </div>
                     </div>
 
                     <div className={'w-100 d-flex'}>
                         <div className={'col-9 p-0'}>
                             <div className={'w-100 d-flex mt-2'}>
-                                <div className={'col-3 p-0'}>
+                                <div
+                                    className={'col-3 p-0 d-flex align-items-center'}>
                                     <p className={'m-0 font-italic'}>
                                         {isEng ?
                                             'Product name:' :
@@ -107,7 +126,11 @@ class OrderStatusCard extends React.Component {
                                     </p>
                                 </div>
                                 <div className={'col-9 p-0'}>
-                                    <h5 className={'m-0'}>{productName}</h5>
+                                    <a style={{fontSize: '1.2rem'}}
+                                       href={`/product/${productId}`}
+                                       target="_blank">
+                                        {productName}
+                                    </a>
                                 </div>
                             </div>
 
@@ -122,7 +145,8 @@ class OrderStatusCard extends React.Component {
                                     </div>
                                 </div>
                                 <div className={'col-9 p-0'}>
-                                    <div className={'w-100 d-flex justify-content-between'}>
+                                    <div
+                                        className={'w-100 d-flex justify-content-between'}>
                                         <div className={'col-7 p-0'}>
                                             <p className={'m-0'}>{userName}</p>
                                         </div>
@@ -134,7 +158,9 @@ class OrderStatusCard extends React.Component {
                                             </p>
                                         </div>
                                         <div className={'col-3 p-0'}>
-                                            <p className={'m-0'}>{userPhone}</p>
+                                            <a style={{color: 'black'}}
+                                               href={`tel: +84${userPhone}`}
+                                               className={'m-0'}>{userPhone}</a>
                                         </div>
                                     </div>
                                 </div>
