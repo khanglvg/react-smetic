@@ -40,6 +40,23 @@ class APIModel {
             });
     };
 
+    getProducts = async () => {
+        return fetch(`${apiUrl}/getProducts.php`,
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                return data;
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    };
+
     getUser = async ({userId: userId}) => {
         console.log(`${apiUrl}/getUser.php?userId='${userId}'`);
         return fetch(`${apiUrl}/getUser.php?userId='${userId}'`,

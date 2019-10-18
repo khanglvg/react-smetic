@@ -40,6 +40,11 @@ class SearchResults extends React.Component {
             isLoading: true,
         });
 
+        if (this.props.location && this.props.location.state && this.props.location.state.isGetAll)
+        {
+            return await apiModel.getProducts();
+        }
+
         return await apiModel.getProductBySearch({
             isForMale: this.searchInfo.isForMale,
             isForFemale: this.searchInfo.isForFemale,
@@ -68,7 +73,13 @@ class SearchResults extends React.Component {
                 const splitAgeRange = function (ageRange) {
                     return ageRange.split('-');
                 };
-                const {minAge, maxAge} = this.searchInfo;
+                let {minAge, maxAge} = this.searchInfo;
+                if (minAge === undefined) {
+                    minAge = 0;
+                }
+                if (maxAge === undefined) {
+                    maxAge = 100;
+                }
                 // eslint-disable-next-line array-callback-return
                 const filterAge = this.data.filter(function (element) {
                     const ageRange = element['DoTuoi'];
