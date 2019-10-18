@@ -5,7 +5,8 @@ import {
     seeMore,
     shoppingCart,
     userShape,
-    downArrow
+    downArrow,
+    checkIcon
 } from './svg';
 
 const iconList = {
@@ -14,7 +15,8 @@ const iconList = {
     shoppingCart,
     searchIcon,
     userShape,
-    downArrow
+    downArrow,
+    checkIcon
 };
 
 export default class Icon extends React.Component {
