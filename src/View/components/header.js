@@ -11,6 +11,22 @@ class Header extends React.Component {
         this.state = {
             searchValue: '',
         };
+        this.handleEnterEvent = this.handleEnterEvent.bind(this);
+    }
+
+    componentDidMount() {
+        this.inputNode = document.getElementById('search-input');
+        this.inputNode.addEventListener('keyup', this.handleEnterEvent);
+    }
+
+    componentWillUnmount() {
+        this.inputNode.removeEventListener('keyup', this.handleEnterEvent);
+    }
+
+    handleEnterEvent(e) {
+        if (e.key === 'Enter') {
+            this.handleSearch();
+        }
     }
 
     handleSearchValue = (e) => {
@@ -59,7 +75,7 @@ class Header extends React.Component {
             forFemale = true;
         }
 
-        const props = {
+        let props = {
             isForMale: forMale,
             isForFemale: forFemale,
             skinType: skinTypeValue,
@@ -67,6 +83,11 @@ class Header extends React.Component {
             maxAge: ageRangeValue.maxAge,
         };
 
+        if(arr.length === 1 && this.state.searchValue === "") {
+             props = {
+                isGetAll: true,
+            };
+        }
         if(this.props.location.pathname === SEARCH_PATH) {
             this.props.history.replace(SEARCH_PATH, props);
         }
@@ -173,6 +194,7 @@ class Header extends React.Component {
                             className="col-9 m-0 p-0 d-flex align-items-center">
                               <div className="input-group">
                                   <input type="text"
+                                         id={'search-input'}
                                          className="form-control remove-outline"
                                          placeholder="What are you looking for?"
                                          aria-label="Recipient's username"
