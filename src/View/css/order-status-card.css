@@ -27,3 +27,21 @@
     background-color: #00e650;
     border: 1px solid #00e650;
 }
+
+.confirm {
+    background-color: transparent;
+    color: #00e650;
+    font-weight: 900;
+    border: 1px solid #00e650;
+}
+
+.confirm:hover {
+    color: white;
+    background-color: #00e650;
+}
+
+.cancel {
+    background-color: transparent;
+    color: #7A7A7A;
+    font-weight: 900;
+}

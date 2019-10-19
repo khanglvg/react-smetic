@@ -7,21 +7,25 @@ import { getDisplayTime } from '../../../utils/converter';
 class OrderStatusCard extends React.Component {
     renderButtonConfirm = () => {
         const {orderStatus, isEng} = this.props;
+        const status = parseInt(orderStatus);
         const confirmed = isEng ?
             'Confirmed' :
             'Đã xác nhận';
         const needConfirm = isEng ?
             'Confirm the order' :
             'Xác nhận đơn hàng';
-        const cName = orderStatus === 2 ?
+        const cName = status === 2 ?
             'd-flex my-btn confirmed remove-outline justify-content-center align-items-center' :
             'my-btn need-confirm remove-outline';
         return (
             <button
                 className={cName}
-                disabled={orderStatus === 2}>
+                disabled={status === 2}
+                onClick={this.handleClick}
+                data-toggle="modal"
+                data-target="#modalCenter">
                 {
-                    orderStatus === 2 ?
+                    status === 2 ?
                         <Icon
                             name={'checkIcon'}
                             width={18}
@@ -31,7 +35,7 @@ class OrderStatusCard extends React.Component {
                 }
                 <p className={'ml-2 mb-0'}>
                     {
-                        orderStatus === 2 ?
+                        status === 2 ?
                             confirmed :
                             needConfirm
                     }
@@ -41,15 +45,49 @@ class OrderStatusCard extends React.Component {
     };
 
     handleImgClick = () => {
+        const id = this.props.productId;
         const a = document.createElement('a');
-        a.href = `/product/${this.props.productId}`;
+        a.href = `/product/${id}`;
         a.target = '_blank';
         a.click();
     };
 
     handleClick = () => {
-
+        const id = this.props.orderId;
+        this.props.onClickConfirm(id);
     };
+
+    getDisplayStatus(status, isEng = true) {
+        if (parseInt(status) === 0) {
+            return (
+                <div
+                    className={'w-100 d-flex justify-content-start align-items-center'}>
+                    <p className={'m-0 font-italic'}>
+                        {
+                            isEng ?
+                                'Pending' :
+                                'Chưa giao'
+                        }
+                    </p>
+                </div>
+            );
+
+        }
+        if (parseInt(status) === 1) {
+            return (
+                <div
+                    className={'w-100 d-flex justify-content-start align-items-center'}>
+                    <p className={'m-0 font-italic'}>
+                        {
+                            isEng ?
+                                'Done Delivery' :
+                                'Đã giao hàng'
+                        }
+                    </p>
+                </div>
+            );
+        }
+    }
 
     render() {
         const {
@@ -63,6 +101,7 @@ class OrderStatusCard extends React.Component {
             totalPrice,
             productCount,
             productPrice,
+            orderStatus,
             creatingDate,
             isEng,
         } = this.props;
@@ -81,7 +120,7 @@ class OrderStatusCard extends React.Component {
                             width: '100%',
                             height: '100%',
                             borderRadius: '5px',
-                            cursor: 'pointer'
+                            cursor: 'pointer',
                         }}
                         src={imScr}
                         onClick={this.handleImgClick}
@@ -91,7 +130,7 @@ class OrderStatusCard extends React.Component {
                 <div className={'w-100 pt-2'}>
                     <div
                         className={'w-100 d-flex justify-content-between align-items-center'}>
-                        <a href={'##'} className={'m-0'}
+                        <a href={`/order-success/${orderId}`} className={'m-0'}
                            style={{fontSize: '1.75rem'}}># {orderId}</a>
                         <div
                             className={'d-flex justify-content-end pr-4'}
@@ -182,7 +221,42 @@ class OrderStatusCard extends React.Component {
 
                         <div
                             className={'col-3 p-0 d-flex justify-content-center align-items-center'}>
-                            {this.renderButtonConfirm()}
+                            <div className={'w-100 h-100'}>
+                                <div
+                                    className={'w-100 d-flex justify-content-start align-items-center'}
+                                    style={{minHeight: '35px'}}>
+                                    {
+                                        parseInt(orderStatus) !== 2 ?
+                                            isEng ?
+                                                <div
+                                                    className={'w-100 d-flex'}>
+                                                    <div
+                                                        className={'w-75 d-flex align-items-center'}>
+                                                        <p className={'m-0'}>
+                                                            Status:
+                                                        </p>
+                                                    </div>
+                                                    {this.getDisplayStatus(orderStatus, isEng)}
+                                                </div>
+                                                :
+                                                <div
+                                                    className={'w-100 d-flex'}>
+                                                    <div
+                                                        className={'w-75 d-flex align-items-center'}>
+                                                        <p className={'m-0'}>
+                                                            Trạng thái:
+                                                        </p>
+                                                    </div>
+                                                    {this.getDisplayStatus(orderStatus, isEng)}
+                                                </div>
+                                            :
+                                            null
+                                    }
+                                </div>
+
+                                {this.renderButtonConfirm()}
+
+                            </div>
                         </div>
                     </div>
 

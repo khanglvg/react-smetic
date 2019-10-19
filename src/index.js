@@ -130,7 +130,7 @@ const r = (
                        render={(props) =>
                            <OrderSuccess{...props}
                                                 isEng={isEng}/>}/>
-                <Route exact path="/order-report"
+                <Route exact path="/order-report/:filter?"
                        render={(props) =>
                            <OrderReport{...props}
                                        isEng={isEng}/>}

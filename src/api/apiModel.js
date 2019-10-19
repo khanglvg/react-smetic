@@ -117,8 +117,45 @@ class APIModel {
 
     };
 
+    getOrders = async () => {
+        return fetch(`${apiUrl}/getOrders.php`,
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                return data;
+            })
+            .catch(error => {
+                console.log(error);
+            });
+
+    };
+
     postOrder = async (orderData) => {
         return fetch(`${apiUrl}/postOrder.php`, {
+            method: 'post',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(orderData),
+        })
+            .then(response => response.json())
+            .then(data => {
+                return data;
+            })
+            .catch(error => {
+                console.log(error);
+            });
+
+    };
+
+    updateOrder = async (orderData) => {
+        return fetch(`${apiUrl}/updateOrderStatus.php`, {
             method: 'post',
             headers: {
                 Accept: 'application/json',
