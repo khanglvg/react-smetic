@@ -47,8 +47,8 @@ class ProductDetails extends React.Component {
             this.productInfo['MoTa'] :
             'Description';
 
-        this.vendorName = this.productInfo['NguoiCungCap'] ?
-            this.productInfo['NguoiCungCap'] :
+        this.vendorName = this.productInfo['TenVendor'] ?
+            this.productInfo['TenVendor'] :
             'Vendor name';
 
         this.ageRange = this.productInfo['DoTuoi'] ?
