@@ -40,8 +40,7 @@ class SearchResults extends React.Component {
             isLoading: true,
         });
 
-        if (this.props.location && this.props.location.state && this.props.location.state.isGetAll)
-        {
+        if (this.props.location && this.props.location.state && this.props.location.state.isGetAll) {
             return await apiModel.getProducts();
         }
 
@@ -70,6 +69,7 @@ class SearchResults extends React.Component {
                 res.push(<NotFound/>);
             }
             else {
+                const {isEng} = this.props;
                 const splitAgeRange = function (ageRange) {
                     return ageRange.split('-');
                 };
@@ -124,6 +124,7 @@ class SearchResults extends React.Component {
                             vendorName={vendorName}
                             price={price}
                             style={{marginTop: '30px'}}
+                            isEng={isEng}
                         />,
                     );
                 }

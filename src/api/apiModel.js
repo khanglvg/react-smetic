@@ -58,7 +58,6 @@ class APIModel {
     };
 
     getUser = async ({userId: userId}) => {
-        console.log(`${apiUrl}/getUser.php?userId='${userId}'`);
         return fetch(`${apiUrl}/getUser.php?userId='${userId}'`,
             {
                 headers: {
@@ -98,6 +97,43 @@ class APIModel {
                     console.log(error);
                 });
         }
+    };
+
+    getOrdersById = async (orderId) => {
+        return fetch(`${apiUrl}/getOrderById.php?orderId='${orderId}'`,
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                return data;
+            })
+            .catch(error => {
+                console.log(error);
+            });
+
+    };
+
+    postOrder = async (orderData) => {
+        return fetch(`${apiUrl}/postOrder.php`, {
+            method: 'post',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(orderData),
+        })
+            .then(response => response.json())
+            .then(data => {
+                return data;
+            })
+            .catch(error => {
+                console.log(error);
+            });
+
     };
 }
 

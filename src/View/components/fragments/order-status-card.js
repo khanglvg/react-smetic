@@ -204,14 +204,14 @@ class OrderStatusCard extends React.Component {
                         </div>
 
                         <div className={'col-4 p-0 d-flex'}>
-                            <div className={'col-4 p-0'}>
+                            <div className={'col-5 p-0'}>
                                 <p className={'m-0 font-italic'}>
                                     {isEng ?
                                         'Product price:' :
                                         'Đơn giá:'}
                                 </p>
                             </div>
-                            <div className={'col-8 p-0'}>
+                            <div className={'col-7 p-0'}>
                                 <p className={'font-italic'}>{numberWithCommas(productPrice)} đ</p>
                             </div>
                         </div>

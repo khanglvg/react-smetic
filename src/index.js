@@ -25,7 +25,7 @@ import OrderSuccess from './View/components/order-success';
 import OrderReport from './View/components/order-report';
 
 let isAuthenticated = false;
-
+const isEng = true;
 
 // function PrivateRoute({ children, ...rest }) {
 //     return (
@@ -57,11 +57,11 @@ function renderLoginPage() {
 }
 
 function renderHeader() {
-    return (<Header/>);
+    return (<Header isEng={isEng}/>);
 }
 
 function renderFooter() {
-    return (<Footer/>);
+    return (<Footer isEng={isEng}/>);
 }
 
 function renderContent() {
@@ -99,73 +99,96 @@ const fakeAuth = {
 };
 
 const r = (
-  <Router>
-      {renderHeader()}
-      <div>
-          <Switch>
-              <Route exact path="/" component={HomePage}/>
-              <Route path="/search-result"
-                     render={(props) => <SearchResults{...props}/>}/>
-              <Route exact path="/product/:productId?"
-                     render={(props) => <ProductDetails {...props} />}/>
-              <Route exact path="/checkout"
-                     render={(props) => <Checkout{...props}/>}/>
-              <Route exact path="/checkout/confirmation"
-                     render={(props) => <CheckoutConfirmation{...props}/>}/>
-              <Route exact path="/success" component={OrderSuccess}/>
-              <Route exact path="/order-report" component={OrderReport}/>
-              <Route component={NotFound}/>
-          </Switch>
-      </div>
-      {renderFooter()}
-  </Router>
+    <Router>
+        {renderHeader()}
+        <div>
+            <Switch>
+                <Route exact path="/"
+                       render={(props) =>
+                           <HomePage{...props}
+                                    isEng={isEng}/>}
+                />
+                <Route path="/search-result"
+                       render={(props) =>
+                           <SearchResults{...props}
+                                         isEng={isEng}/>}
+                />
+                <Route exact path="/product/:productId?"
+                       render={(props) =>
+                           <ProductDetails {...props} isEng={isEng}/>}
+                />
+                <Route exact path="/checkout"
+                       render={(props) =>
+                           <Checkout{...props}
+                                    isEng={isEng}/>}
+                />
+                <Route exact path="/checkout/confirmation"
+                       render={(props) =>
+                           <CheckoutConfirmation{...props}
+                                                isEng={isEng}/>}/>
+                <Route exact path="/order-success/:orderId?"
+                       render={(props) =>
+                           <OrderSuccess{...props}
+                                                isEng={isEng}/>}/>
+                <Route exact path="/order-report"
+                       render={(props) =>
+                           <OrderReport{...props}
+                                       isEng={isEng}/>}
+                />
+                <Route component={NotFound}/>
+            </Switch>
+        </div>
+        {renderFooter()}
+    </Router>
 );
 
 const routing = (
-  <Router>
-      <Switch>
-          <Route path="/login">
-              <Login />
-          </Route>
-          <PrivateRoute path="/p">
-              <Router>
-                  {renderHeader()}
-                  <div>
-                      <Switch>
-                          <Route path="/home" component={HomePage}/>
-                          <Route path="/search-result"
-                                 render={(props) => <SearchResults{...props}/>}/>
-                          <Route exact path="/product/:productId?"
-                                 render={(props) => <ProductDetails {...props} />}/>
-                          <Route component={NotFound}/>
-                      </Switch>
-                  </div>
-                  {renderFooter()}
-              </Router>
-          </PrivateRoute>
-      </Switch>
-  </Router>
+    <Router>
+        <Switch>
+            <Route path="/login">
+                <Login/>
+            </Route>
+            <PrivateRoute path="/p">
+                <Router>
+                    {renderHeader()}
+                    <div>
+                        <Switch>
+                            <Route path="/home" component={HomePage}/>
+                            <Route path="/search-result"
+                                   render={(props) =>
+                                       <SearchResults{...props}/>}/>
+                            <Route exact path="/product/:productId?"
+                                   render={(props) =>
+                                       <ProductDetails {...props} />}/>
+                            <Route component={NotFound}/>
+                        </Switch>
+                    </div>
+                    {renderFooter()}
+                </Router>
+            </PrivateRoute>
+        </Switch>
+    </Router>
 );
 
 function PrivateRoute({children, ...rest}) {
     return (
-      <Route
-        {...rest}
-        render={({location}) =>
-          fakeAuth.isAuthenticated ?
-            (
-              children
-            ) :
-            (
-              <Redirect
-                to={{
-                    pathname: '/login',
-                    state: {from: location},
-                }}
-              />
-            )
-        }
-      />
+        <Route
+            {...rest}
+            render={({location}) =>
+                fakeAuth.isAuthenticated ?
+                    (
+                        children
+                    ) :
+                    (
+                        <Redirect
+                            to={{
+                                pathname: '/login',
+                                state: {from: location},
+                            }}
+                        />
+                    )
+            }
+        />
     );
 }
 
@@ -181,7 +204,7 @@ function Login() {
     };
 
     return (
-      <LoginPage onClick={login}/>
+        <LoginPage onClick={login}/>
     );
 }
 

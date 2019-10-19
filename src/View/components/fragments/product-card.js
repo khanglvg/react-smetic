@@ -14,7 +14,6 @@ class ProductCard extends React.Component {
             vendorName: vendorName,
             productQuantity: 1,
             price: price,
-            isEng: true,
         };
         this.props.history.push(path, props);
     };
@@ -26,7 +25,7 @@ class ProductCard extends React.Component {
     };
 
     render() {
-        const {imgSrc, productId, productName, price, style} = this.props;
+        const {imgSrc, productId, productName, price, style, isEng} = this.props;
         return (
             <div className="col-3 p-3" style={{...style}}>
                 <div className="show-products-card">
@@ -66,7 +65,9 @@ class ProductCard extends React.Component {
                             <button
                                 onClick={this.handleAddToCart}
                                 className="d-flex btn w-100 align-items-center justify-content-around">
-                                ADD TO CART
+                                {
+                                    isEng? 'ADD TO CART' : 'THÊM VÀO GIỎ'
+                                }
                             </button>
                         </div>
                     </div>

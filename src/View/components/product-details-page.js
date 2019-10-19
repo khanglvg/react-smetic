@@ -10,7 +10,6 @@ class ProductDetails extends React.Component {
         super(props);
         this.state = {
             isLoadDone: false,
-            isEng: false,
         };
     }
 
@@ -81,7 +80,7 @@ class ProductDetails extends React.Component {
             genderDisplay = 'Không xác định';
         }
 
-
+        const {isEng} = this.props;
         return (
             <div className={'d-flex p-0 m-0 mt-5 w-100'} style={{
                 color: 'black',
@@ -109,7 +108,7 @@ class ProductDetails extends React.Component {
                     <div className={'d-flex mt-4'}>
                         <div className={'col-3 p-0'}>
                             <p
-                                className={'font-italic'}>{this.state.isEng ?
+                                className={'font-italic'}>{isEng ?
                                 'Product type:' :
                                 'Loại sản phẩm:'}</p>
                         </div>
@@ -123,7 +122,7 @@ class ProductDetails extends React.Component {
                     <div className={'d-flex'}>
                         <div className={'col-3 p-0'}>
                             <p
-                                className={'font-italic'}>{this.state.isEng ?
+                                className={'font-italic'}>{isEng ?
                                 'Description:' :
                                 'Mô tả:'}</p>
                         </div>
@@ -137,7 +136,7 @@ class ProductDetails extends React.Component {
                     <div className={'d-flex'}>
                         <div className={'col-3 p-0'}>
                             <p
-                                className={'font-italic'}>{this.state.isEng ?
+                                className={'font-italic'}>{isEng ?
                                 'Vendor Name:' :
                                 'Nhà cung cấp:'}</p>
                         </div>
@@ -151,7 +150,7 @@ class ProductDetails extends React.Component {
                     <div className={'d-flex'}>
                         <div className={'col-3 p-0'}>
                             <p
-                                className={'font-italic'}>{this.state.isEng ?
+                                className={'font-italic'}>{isEng ?
                                 'Age Range:' :
                                 'Độ tuổi:'}</p>
                         </div>
@@ -165,7 +164,7 @@ class ProductDetails extends React.Component {
                     <div className={'d-flex'}>
                         <div className={'col-3 p-0'}>
                             <p
-                                className={'font-italic'}>{this.state.isEng ?
+                                className={'font-italic'}>{isEng ?
                                 'Gender:' :
                                 'Dành cho:'}</p>
                         </div>
@@ -179,7 +178,7 @@ class ProductDetails extends React.Component {
                     <div className={'d-flex'}>
                         <div className={'col-3 p-0'}>
                             <p
-                                className={'font-italic'}>{this.state.isEng ?
+                                className={'font-italic'}>{isEng ?
                                 'Skin Type:' :
                                 'Loại da:'}</p>
                         </div>
@@ -225,7 +224,11 @@ class ProductDetails extends React.Component {
                             <button
                                 onClick={this.handleAddToCart}
                                 className="ml-4 d-flex btn w-100 align-items-center justify-content-around">
-                                ADD TO CART
+                                {
+                                    isEng ?
+                                        'ADD TO CART' :
+                                        'THÊM VÀO GIỎ HÀNG'
+                                }
                             </button>
                         </div>
                     </div>

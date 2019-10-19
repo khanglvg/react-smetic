@@ -74,7 +74,7 @@ class OrderReport extends React.Component {
     renderOrders() {
         let res = [];
         if (this.data) {
-            console.log(this.data)
+            const {isEng} = this.props;
             res = this.data.map(function (order) {
                 const orderId = order['MaDH'] ? order['MaDH'] : UNKNOWN;
                 const imScr = order['orderId'] ? order['orderId'] : DEFAULT_IMAGE;
@@ -89,21 +89,24 @@ class OrderReport extends React.Component {
                 const orderStatus = order['TinhTrangDonHang'] ? order['TinhTrangDonHang'] : UNKNOWN;
                 const creatingDate = order['NgayTaoDH'] ? order['NgayTaoDH'] : UNKNOWN;
                 return (
-                    <OrderStatusCard
-                        key={orderId}
-                        orderId={orderId}
-                        imScr={imScr}
-                        productName={productName}
-                        productId={productId}
-                        userName={userName}
-                        deliveryAddress={deliveryAddress}
-                        userPhone={userPhone}
-                        totalPrice={totalPrice}
-                        productPrice={productPrice}
-                        productCount={productCount}
-                        orderStatus={orderStatus}
-                        creatingDate={creatingDate}
-                    />
+                    <div className={'w-100 mt-3'}>
+                        <OrderStatusCard
+                            key={orderId}
+                            orderId={orderId}
+                            imScr={imScr}
+                            productName={productName}
+                            productId={productId}
+                            userName={userName}
+                            deliveryAddress={deliveryAddress}
+                            userPhone={userPhone}
+                            totalPrice={totalPrice}
+                            productPrice={productPrice}
+                            productCount={productCount}
+                            orderStatus={orderStatus}
+                            creatingDate={creatingDate}
+                            isEng={isEng}
+                        />
+                    </div>
                 );
             });
         }
@@ -155,7 +158,7 @@ class OrderReport extends React.Component {
                         </div>
                     </div>
 
-                    <div className={'w-100 pt-4'}>
+                    <div className={'w-100 pt-3'}>
                         {this.renderOrders()}
                     </div>
 
