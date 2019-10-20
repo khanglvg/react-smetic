@@ -27,7 +27,7 @@ import ProductReport from './View/components/product-report';
 import userConfig from './storage/user-config';
 
 let isAuthenticated = false;
-const isEng = false;
+const isEng = true;
 
 userConfig.setUserId('Khang');
 

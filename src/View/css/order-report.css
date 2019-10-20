@@ -9,3 +9,22 @@
     border-bottom: 1px solid #d8d8d8;
 }
 
+.confirm {
+    background-color: transparent;
+    color: #00e650;
+    font-weight: 900;
+    border: 1px solid #00e650;
+    font-family: 'Poppins', sans-serif;
+}
+
+.confirm:hover {
+    color: white;
+    background-color: #00e650;
+    font-family: 'Poppins', sans-serif;
+}
+
+.cancel {
+    background-color: transparent;
+    color: #7A7A7A;
+    font-weight: 900;
+}

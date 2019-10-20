@@ -1,0 +1,10 @@
+.product-cart-container {
+    border-radius: 5px;
+    color: black;
+    background-color: white;
+}
+
+.chosen {
+    background-color: #f3fdf8;
+}
+

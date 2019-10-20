@@ -21,7 +21,7 @@ class ZStorage {
 
     addProductToCart(productCart) {
         if (productCart && productCart.productId) {
-            console.log(this.__CART__)
+            console.log(this.__CART__);
             this.__CART__[this._userId][productCart.productId] = productCart;
             sessionStorage.setItem(CART_KEY, JSON.stringify(this.__CART__));
             return true;
@@ -40,6 +40,9 @@ class ZStorage {
 
     getProductsInCart() {
         const obj = JSON.parse(sessionStorage.getItem(CART_KEY));
+        if (!obj) {
+            return {};
+        }
         return obj[this._userId];
     }
 
@@ -55,7 +58,7 @@ class ZStorage {
     }
 
     clearCart() {
-        this.__CART__ = {};
+        this.__CART__[this._userId] = {};
         sessionStorage.setItem(CART_KEY, JSON.stringify(this.__CART__));
     }
 

@@ -321,10 +321,10 @@ class Header extends React.Component {
                                                 'My account' :
                                                 'Tài khoản của tôi'}
                                         </a>
-                                        <a className="dropdown-item"
-                                           href="#">{isEng ?
+                                        <Link className="dropdown-item"
+                                           to="/checkout">{isEng ?
                                             'My orders' :
-                                            'Giỏ hàng của tôi'}</a>
+                                            'Giỏ hàng của tôi'}</Link>
                                         <div
                                             className="dropdown-divider"></div>
                                         <a

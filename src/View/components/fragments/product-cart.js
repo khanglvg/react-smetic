@@ -1,6 +1,7 @@
 import React from 'react';
 import { numberWithCommas } from '../../../utils/correct-money';
 import { Link } from 'react-router-dom';
+import '../../css/product-cart.css';
 
 class ProductCart extends React.Component {
     handleImgClick = () => {
@@ -8,16 +9,21 @@ class ProductCart extends React.Component {
         a.click();
     };
 
-    render() {
-        const {productId, productName, imgSrc, vendorName, price, productQuantity} = this.props;
+    chooseItem = () => {
+        const {productId, onChooseItem} = this.props;
+        if (onChooseItem) {
+            onChooseItem(productId);
+        }
+    };
 
+    render() {
+        const {productId, productName, imgSrc, vendorName, price, productQuantity, isChosen} = this.props;
+        let className = 'd-flex p-0 m-0 product-cart-container ';
+        if (isChosen) {
+            className += 'chosen';
+        }
         return (
-            <div className={'d-flex p-0 m-0'}
-                 style={{
-                     borderRadius: '5px',
-                     backgroundColor: 'white',
-                     color: 'black',
-                 }}>
+            <div className={className}>
                 <div className={'d-flex m-0'} style={{
                     minWidth: '150px',
                     maxWidth: '150px',
@@ -50,7 +56,7 @@ class ProductCart extends React.Component {
                         </Link>
                     </div>
 
-                    <div className={'d-flex mt-3 mb-2'}>
+                    <div className={'d-flex mt-3 mb-2'} onClick={this.chooseItem}>
                         <div className={'col-3 p-0'}>
                             <p
                                 className={'m-0 font-italic'}>
@@ -68,7 +74,7 @@ class ProductCart extends React.Component {
                         </div>
                     </div>
 
-                    <div className={'d-flex'}>
+                    <div className={'d-flex'} onClick={this.chooseItem}>
                         <div className={'d-flex col-5 p-0'}>
                             <div className={'col-4 p-0 pt-1'}>
                                 <p

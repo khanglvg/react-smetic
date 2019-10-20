@@ -5,6 +5,7 @@ import apiModel from '../../api/apiModel';
 import { numberWithCommas } from '../../utils/correct-money';
 import LoadingScreen from 'react-loading-screen';
 import NotFound from './not-found';
+import zStorage from '../../storage/storage';
 
 const PATH = '/order-success';
 const UNKNOWN = 'Unknown value';
@@ -51,6 +52,7 @@ class CheckoutConfirmation extends React.Component {
             });
 
             if (res && res.orderId) {
+                zStorage.clearCart();
                 this.setState({
                     isLoading: false,
                 });

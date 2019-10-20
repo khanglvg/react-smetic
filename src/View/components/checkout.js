@@ -3,8 +3,8 @@ import ProductCart from './fragments/product-cart';
 import TotalCard from './fragments/total-card';
 import { withRouter } from 'react-router-dom';
 import '../css/checkout.css';
-import NotFound from './not-found';
 import zStorage from '../../storage/storage';
+import NotFound from './not-found';
 
 class Checkout extends React.Component {
     constructor(props) {
@@ -15,13 +15,20 @@ class Checkout extends React.Component {
             currentProductId: '',
         };
 
+        this.infoToPush = {};
+
         this.renderProducts = this.renderProducts.bind(this);
     }
 
     componentDidMount() {
         if (Array.isArray(this.data) && this.data.length >= 1) {
+            this.infoToPush = {
+                productId: this.data[0].productId,
+                productQuantity: this.data[0].productQuantity,
+                price: this.data[0].price,
+            };
             this.setState({
-                currentProductId: this.data[0],
+                currentProductId: this.data[0].productId,
             });
         }
     }
@@ -37,25 +44,49 @@ class Checkout extends React.Component {
         return res;
     };
 
+    handleChangeChooseItem = (id) => {
+        let item = this.data.filter((item) => item.productId === id);
+        if(item) {
+            this.infoToPush = {
+                productId: item[0].productId,
+                productQuantity: item[0].productQuantity,
+                price: item[0].price,
+            };
+            this.setState({
+                currentProductId: id,
+            });
+        }
+    };
+
     renderProducts() {
         let res = [];
         const {isEng} = this.props;
         let totalPrice = 0;
+        const {currentProductId} = this.state;
+        const handleChangeChooseItem = this.handleChangeChooseItem;
         if (Array.isArray(this.data)) {
             res = this.data.map(function (item, index) {
                 const {imgSrc, productId, productName, vendorName, productQuantity, price} = item;
+                let isChosen = false;
 
                 if (price !== undefined && price !== null && productQuantity !== undefined && productQuantity !== null) {
-                    totalPrice += price * productQuantity;
+                    if (productId === currentProductId) {
+                        isChosen = true;
+                        totalPrice += price * productQuantity;
+                    }
                 }
 
                 let className = 'w-100';
                 if (index !== 0) {
                     className += ' mt-3';
                 }
+
+
                 return (
                     <div className={className}>
                         <ProductCart
+                            isChosen={isChosen}
+                            onChooseItem={handleChangeChooseItem}
                             isEng={isEng}
                             productId={productId}
                             imgSrc={imgSrc}
@@ -72,9 +103,9 @@ class Checkout extends React.Component {
     }
 
     handleClickBuy = () => {
-        if (this.props.location.state) {
+        if (this) {
             let path = `/checkout/confirmation`;
-            const {productId, productQuantity, price} = this.props.location.state;
+            const {productId, productQuantity, price} = this.infoToPush;
             const props = {
                 productId: productId,
                 productPrice: price,
@@ -87,6 +118,9 @@ class Checkout extends React.Component {
     };
 
     render() {
+        if(zStorage.getCartCount() === 0) {
+            return <NotFound/>
+        }
         const {isEng} = this.props;
         return (
             <div className={'w-100 h-100 checkout-cover'}>

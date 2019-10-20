@@ -64,7 +64,7 @@ class OrderReport extends React.Component {
             orderStatus: 2,
         }).then(() => true);
 
-        if(res === true) {
+        if (res === true) {
             const a = document.createElement('a');
             a.href = `/order-report/${this.state.orderStatus}`;
             a.click();
@@ -79,12 +79,12 @@ class OrderReport extends React.Component {
                 <div className={'w-100 d-flex align-items-center'}>
                     <h5 className={'mb-0 mr-1'}>
                         Confirm order
-                    </h5>
-                    <a href={`/order-success/${orderId}`} target={'_blank'} className={'remove-underline'}
-                       style={{fontSize: '1.25rem'}}>
-                        {orderId}
-                    </a>
-                    <h5 className={'mb-0 ml-1'}>
+                        <a href={`/order-success/${orderId}`}
+                           target={'_blank'}
+                           className={'remove-underline ml-1 mr-1'}
+                           style={{fontSize: '1.25rem'}}>
+                            {orderId}
+                        </a>
                         has done!
                     </h5>
                 </div>
@@ -95,12 +95,12 @@ class OrderReport extends React.Component {
                 <div className={'w-100 d-flex align-items-center'}>
                     <h5 className={'mb-0 mr-1'}>
                         Xác nhận đơn hàng
-                    </h5>
-                    <a href={'##'} className={'remove-underline'}
-                       style={{fontSize: '1.25rem'}}>
-                        {orderId}
-                    </a>
-                    <h5 className={'mb-0 ml-1'}>
+                        <a href={`/order-success/${orderId}`}
+                           target={'_blank'}
+                           className={'remove-underline ml-1 mr-1'}
+                           style={{fontSize: '1.25rem'}}>
+                            {orderId}
+                        </a>
                         hoàn thành!
                     </h5>
                 </div>
@@ -166,8 +166,8 @@ class OrderReport extends React.Component {
                 const orderId = order['MaDH'] ?
                     order['MaDH'] :
                     UNKNOWN;
-                const imScr = order['orderId'] ?
-                    order['orderId'] :
+                const imScr = order['HinhAnh'] ?
+                    order['HinhAnh'] :
                     DEFAULT_IMAGE;
                 const productName = order['TenSP'] ?
                     order['TenSP'] :
@@ -325,8 +325,12 @@ class OrderReport extends React.Component {
                                             className="btn confirm remove-outline">
                                         {
                                             isEng ?
-                                                'Confirm' :
-                                                'Xác nhận đơn hàng'
+                                                <p className={'ml-2 mb-0'}>
+                                                    Confirm
+                                                </p> :
+                                                <p className={'ml-2 mb-0'}>
+                                                    Xác nhận đơn hàng
+                                                </p>
                                         }
                                     </button>
                                 </div>
