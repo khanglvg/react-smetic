@@ -100,7 +100,7 @@ class SearchResults extends React.Component {
                 for (let i = 0; i < filterAge.length; i++) {
                     const productId = filterAge[i]['MaSP'];
 
-                    const imgSrc = filterAge[i]['HinhAnh'] ?
+                    const imgScr = filterAge[i]['HinhAnh'] ?
                         filterAge[i]['HinhAnh'] :
                         DEFAULT_IMAGE;
 
@@ -119,7 +119,7 @@ class SearchResults extends React.Component {
                     res.push(
                         <ProductCard
                             productId={productId}
-                            imgSrc={imgSrc}
+                            imgSrc={imgScr}
                             productName={productName}
                             vendorName={vendorName}
                             price={price}

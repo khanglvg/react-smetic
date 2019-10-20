@@ -4,18 +4,77 @@ import TotalCard from './fragments/total-card';
 import { withRouter } from 'react-router-dom';
 import '../css/checkout.css';
 import NotFound from './not-found';
+import zStorage from '../../storage/storage';
 
 class Checkout extends React.Component {
     constructor(props) {
         super(props);
         this.totalPrice = 0;
-        console.log(this.props)
+        this.data = this.getData();
+        this.state = {
+            currentProductId: '',
+        };
+
+        this.renderProducts = this.renderProducts.bind(this);
+    }
+
+    componentDidMount() {
+        if (Array.isArray(this.data) && this.data.length >= 1) {
+            this.setState({
+                currentProductId: this.data[0],
+            });
+        }
+    }
+
+    getData() {
+        let res = [];
+        const products = zStorage.getProductsInCart();
+        const keys = Object.keys(products);
+        console.log(keys);
+        for (let i = 0; i < keys.length; i++) {
+            res.push(products[keys[i]]);
+        }
+        return res;
+    };
+
+    renderProducts() {
+        let res = [];
+        const {isEng} = this.props;
+        let totalPrice = 0;
+        if (Array.isArray(this.data)) {
+            res = this.data.map(function (item, index) {
+                const {imgSrc, productId, productName, vendorName, productQuantity, price} = item;
+
+                if (price !== undefined && price !== null && productQuantity !== undefined && productQuantity !== null) {
+                    totalPrice += price * productQuantity;
+                }
+
+                let className = 'w-100';
+                if (index !== 0) {
+                    className += ' mt-3';
+                }
+                return (
+                    <div className={className}>
+                        <ProductCart
+                            isEng={isEng}
+                            productId={productId}
+                            imgSrc={imgSrc}
+                            productName={productName}
+                            vendorName={vendorName}
+                            productQuantity={productQuantity}
+                            price={price}/>
+                    </div>
+                );
+            });
+        }
+        this.totalPrice = totalPrice;
+        return res;
     }
 
     handleClickBuy = () => {
         if (this.props.location.state) {
             let path = `/checkout/confirmation`;
-            const {productId,productQuantity, price} = this.props.location.state;
+            const {productId, productQuantity, price} = this.props.location.state;
             const props = {
                 productId: productId,
                 productPrice: price,
@@ -32,22 +91,13 @@ class Checkout extends React.Component {
             return (<NotFound/>);
         }
 
-        const {imgSrc, productId, productName, vendorName, productQuantity, price} = this.props.location.state;
         const {isEng} = this.props;
-        this.totalPrice = parseInt(price) * parseInt(productQuantity);
         return (
             <div className={'w-100 h-100 checkout-cover'}>
                 <div className="container p-0 pb-3 d-flex flex-wrap">
                     <div className={'d-flex flex-wrap p-0 m-0 w-100'}>
                         <div className={'col-9 p-3'}>
-                            <ProductCart
-                                isEng={isEng}
-                                productId={productId}
-                                imgSrc={imgSrc}
-                                productName={productName}
-                                vendorName={vendorName}
-                                productQuantity={productQuantity}
-                                price={price}/>
+                            {this.renderProducts()}
                         </div>
 
                         <div className={'col-3 p-3'}>

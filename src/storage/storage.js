@@ -5,21 +5,23 @@ const CART_KEY = 'smetic-customer-cart';
 class ZStorage {
     constructor() {
         this.__CART__ = {};
-        this._userId = userConfig.getUserId();
-        if (!this._userId) {
-            this._userId = 'anonymous';
-        }
-
-        this.__CART__[this._userId] = {};
-        sessionStorage.setItem(CART_KEY, JSON.stringify(this.__CART__));
-        console.log('storage constructor')
+        console.log('storage constructor');
         this.addProductToCart = this.addProductToCart.bind(this);
         this.removeProductToCart = this.removeProductToCart.bind(this);
         this.clearCart = this.clearCart.bind(this);
     }
 
+    initUserId() {
+        this._userId = userConfig.getUserId();
+        if (!this._userId) {
+            this._userId = 'anonymous';
+        }
+        this.__CART__[this._userId] = {};
+    }
+
     addProductToCart(productCart) {
-        if(productCart && productCart.productId) {
+        if (productCart && productCart.productId) {
+            console.log(this.__CART__)
             this.__CART__[this._userId][productCart.productId] = productCart;
             sessionStorage.setItem(CART_KEY, JSON.stringify(this.__CART__));
             return true;
@@ -28,7 +30,7 @@ class ZStorage {
     }
 
     removeProductToCart(productCart) {
-        if(productCart && productCart.productId) {
+        if (productCart && productCart.productId) {
             delete this.__CART__[this._userId][productCart.productId];
             sessionStorage.setItem(CART_KEY, JSON.stringify(this.__CART__));
             return true;
@@ -37,11 +39,12 @@ class ZStorage {
     }
 
     getProductsInCart() {
-        return sessionStorage.getItem(CART_KEY)[this._userId];
+        const obj = JSON.parse(sessionStorage.getItem(CART_KEY));
+        return obj[this._userId];
     }
 
     getProduct(productId) {
-        if(productId) {
+        if (productId) {
             return sessionStorage.getItem(CART_KEY)[this._userId][productId];
         }
     }
@@ -69,7 +72,7 @@ const Singleton = (function () {
                 instance = createInstance();
             }
             return instance;
-        }
+        },
     };
 })();
 

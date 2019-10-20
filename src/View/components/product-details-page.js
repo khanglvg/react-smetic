@@ -28,7 +28,7 @@ class ProductDetails extends React.Component {
 
     getDisplayProduct() {
         console.log(this.productInfo);
-        this.imgScr = this.productInfo['HinhAnh'] ?
+        this.imgSrc = this.productInfo['HinhAnh'] ?
             this.productInfo['HinhAnh'] :
             DEFAULT_IMAGE;
 
@@ -96,7 +96,7 @@ class ProductDetails extends React.Component {
                          borderRadius: '5px',
                      }}>
                     <img className={'w-100 h-100'}
-                         src={this.imgScr}
+                         src={this.imgSrc}
                          alt={'Product'}
                          style={{borderRadius: '5px'}}/>
                 </div>
@@ -242,7 +242,7 @@ class ProductDetails extends React.Component {
     handleAddToCart = () => {
         let path = `/checkout`;
         const props = {
-            imgScr: this.imgScr,
+            imgSrc: this.imgSrc,
             productId: this.productId,
             productName: this.productName,
             vendorName: this.vendorName,

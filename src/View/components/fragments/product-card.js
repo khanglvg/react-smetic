@@ -30,7 +30,6 @@ class ProductCard extends React.Component {
 
     render() {
         const {imgSrc, productId, productName, price, style, isEng} = this.props;
-        console.log(productId)
         return (
             <div className="col-3 p-3" style={{...style}}>
                 <div className="show-products-card">
