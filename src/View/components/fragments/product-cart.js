@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 class ProductCart extends React.Component {
     handleImgClick = () => {
-        const a = document.getElementById('productLink');
+        const a = document.getElementById(`/product/${this.props.productId}`);
         a.click();
     };
 
@@ -40,7 +40,7 @@ class ProductCart extends React.Component {
                 <div className={'w-100 pt-3 pl-2 m-0'}>
                     <div>
                         <Link to={`/product/${productId}`}
-                              id={'productLink'}
+                              id={`/product/${productId}`}
                               className={'remove-outline'}
                               style={{
                                   fontSize: '1.5rem',

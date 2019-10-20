@@ -43,6 +43,11 @@ class ZStorage {
         return obj[this._userId];
     }
 
+    getCartCount() {
+        const r = this.getProductsInCart();
+        return Object.keys(r).length;
+    }
+
     getProduct(productId) {
         if (productId) {
             return sessionStorage.getItem(CART_KEY)[this._userId][productId];

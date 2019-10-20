@@ -1,7 +1,8 @@
 import React from 'react';
 import '../css/header.css';
 import Icon from './fragments/icon';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
+import zStorage from '../../storage/storage';
 
 const SEARCH_PATH = '/search-result';
 
@@ -101,14 +102,21 @@ class Header extends React.Component {
         }
     };
 
+    handleCartClick = () => {
+        let path = `/checkout`;
+        this.props.history.push(path);
+    };
+
     render() {
+        const cartCount = zStorage.getCartCount();
         const {isEng} = this.props;
         const {searchValue} = this.state;
         return (
             <header className="App-header">
                 <div
                     className="container-fluid d-flex header-container my-navbar">
-                    <div className="header-logo-container d-flex align-items-center">
+                    <div
+                        className="header-logo-container d-flex align-items-center">
                         <a href="https://google.com.vn"
                            aria-label="Smetic">
                             <img
@@ -124,15 +132,15 @@ class Header extends React.Component {
                                 <ul
                                     className="navbar-nav bd-navbar-nav flex-row justify-content-around align-items-center">
                                     <li className="nav-item">
-                                        <a className="nav-link active"
-                                           href="/"
+                                        <Link className="nav-link active"
+                                           to="/"
                                            onClick="">
                                             {
                                                 isEng ?
                                                     'Home' :
                                                     'Trang chủ'
                                             }
-                                        </a>
+                                        </Link>
                                     </li>
                                     <li
                                         className="nav-item dropdown header-content-menu">
@@ -257,6 +265,7 @@ class Header extends React.Component {
                                 <div
                                     className="col-5 p-2 d-flex align-items-center header-shopping-cart">
                                     <button
+                                        onClick={this.handleCartClick}
                                         className="btn w-100 d-flex justify-content-around align-items-center remove-outline">
                                         <Icon
                                             name={'shoppingCart'}
@@ -273,7 +282,7 @@ class Header extends React.Component {
                                     </span>
                                         <span
                                             className="header-shopping-cart-count">
-                                        0
+                                            {cartCount}
                                     </span>
                                     </button>
                                 </div>

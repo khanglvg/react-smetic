@@ -87,10 +87,6 @@ class Checkout extends React.Component {
     };
 
     render() {
-        if (!this.props.location.state) {
-            return (<NotFound/>);
-        }
-
         const {isEng} = this.props;
         return (
             <div className={'w-100 h-100 checkout-cover'}>
