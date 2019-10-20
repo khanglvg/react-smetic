@@ -9,6 +9,7 @@ class Checkout extends React.Component {
     constructor(props) {
         super(props);
         this.totalPrice = 0;
+        console.log(this.props)
     }
 
     handleClickBuy = () => {

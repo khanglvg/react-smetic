@@ -108,11 +108,11 @@ class Header extends React.Component {
             <header className="App-header">
                 <div
                     className="container-fluid d-flex header-container my-navbar">
-                    <div className="header-logo-container">
+                    <div className="header-logo-container d-flex align-items-center">
                         <a href="https://google.com.vn"
                            aria-label="Smetic">
                             <img
-                                src="https://www.pngarts.com/files/2/Iron-Man-PNG-High-Quality-Image.png"
+                                src="https://www.upsieutoc.com/images/2019/09/26/nho.png"
                                 alt="Logo"/>
                         </a>
                     </div>

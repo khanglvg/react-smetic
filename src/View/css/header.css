@@ -36,8 +36,8 @@
 .header-logo-container img {
     min-width: 64px;
     max-width: 64px;
-    min-height: 64px;
     max-height: 64px;
+    background-size: cover;
 }
 
 .header-content-menu {
@@ -57,7 +57,7 @@
     color: black;
 }
 
-.header-content-menu:hover>.header-content-menu-dropdown {
+.header-content-menu:hover > .header-content-menu-dropdown {
     display: block;
     position: absolute;
     margin-top: -2px;
@@ -133,7 +133,7 @@
     max-height: 13px;
 }
 
-.header-user-account>div {
+.header-user-account > div {
     min-width: 184px;
     max-width: 184px;
 }

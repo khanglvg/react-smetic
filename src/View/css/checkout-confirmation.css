@@ -21,7 +21,7 @@
     width: 100% !important;
 }
 
-.place-order> button {
+.place-order > button {
     background-color: #ff424e;
     border: 1px solid #ff424e;
     color: white;
@@ -34,7 +34,7 @@
     transition-duration: 250ms;
 }
 
-.place-order> button :hover {
+.place-order > button:hover {
     color: white;
     border: 1px solid #ff424e;
     background-color: #ff0f1e;

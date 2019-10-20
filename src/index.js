@@ -23,9 +23,13 @@ import CheckoutConfirmation
     from './View/components/checkout-confirmation';
 import OrderSuccess from './View/components/order-success';
 import OrderReport from './View/components/order-report';
+import ProductReport from './View/components/product-report';
+import userConfig from './storage/user-config';
 
 let isAuthenticated = false;
-const isEng = true;
+const isEng = false;
+
+userConfig.setUserId('Khang');
 
 // function PrivateRoute({ children, ...rest }) {
 //     return (
@@ -133,6 +137,11 @@ const r = (
                 <Route exact path="/order-report/:filter?"
                        render={(props) =>
                            <OrderReport{...props}
+                                       isEng={isEng}/>}
+                />
+                <Route exact path="/product-report/:vendorId?"
+                       render={(props) =>
+                           <ProductReport{...props}
                                        isEng={isEng}/>}
                 />
                 <Route component={NotFound}/>

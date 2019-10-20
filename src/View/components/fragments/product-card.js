@@ -1,7 +1,11 @@
 import React from 'react';
 import '../../css/product-card.css';
 import { numberWithCommas } from '../../../utils/correct-money';
-import { withRouter } from 'react-router-dom';
+import {
+    Link,
+    withRouter,
+} from 'react-router-dom';
+import zStorage from '../../../storage/storage';
 
 class ProductCard extends React.Component {
     handleAddToCart = () => {
@@ -15,17 +19,18 @@ class ProductCard extends React.Component {
             productQuantity: 1,
             price: price,
         };
+        zStorage.addProductToCart(props);
         this.props.history.push(path, props);
     };
 
     handleImgClick = () => {
-        const a = document.createElement('a');
-        a.href = `/product/${this.props.productId}`;
+        const a = document.getElementById(`productLink-${this.props.productId}`);
         a.click();
     };
 
     render() {
         const {imgSrc, productId, productName, price, style, isEng} = this.props;
+        console.log(productId)
         return (
             <div className="col-3 p-3" style={{...style}}>
                 <div className="show-products-card">
@@ -46,11 +51,11 @@ class ProductCard extends React.Component {
                         <div
                             className="mt-3 mb-3 pl-1 pr-1 text-center d-flex justify-content-center align-items-center show-products-card-info-title"
                             style={{minHeight: '52px'}}>
-                            <a
-                                href={`/product/${productId}`}
-                                target="_blank">
+                            <Link
+                                id={`productLink-${productId}`}
+                                to={`/product/${productId}`}>
                                 {productName}
-                            </a>
+                            </Link>
                         </div>
                         <div
                             className="mb-3 d-flex w-100 justify-content-center align-items-center show-products-card-info-price">
@@ -66,7 +71,9 @@ class ProductCard extends React.Component {
                                 onClick={this.handleAddToCart}
                                 className="d-flex btn w-100 align-items-center justify-content-around">
                                 {
-                                    isEng? 'ADD TO CART' : 'THÊM VÀO GIỎ'
+                                    isEng ?
+                                        'ADD TO CART' :
+                                        'THÊM VÀO GIỎ'
                                 }
                             </button>
                         </div>

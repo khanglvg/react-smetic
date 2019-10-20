@@ -112,8 +112,8 @@ class SearchResults extends React.Component {
                         filterAge[i]['GiaBan'] :
                         null;
 
-                    const vendorName = filterAge[i]['NguoiCungCap'] ?
-                        filterAge[i]['NguoiCungCap'] :
+                    const vendorName = filterAge[i]['TenVendor'] ?
+                        filterAge[i]['TenVendor'] :
                         null;
 
                     res.push(

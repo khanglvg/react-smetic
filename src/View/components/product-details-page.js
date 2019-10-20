@@ -4,6 +4,7 @@ import { DEFAULT_IMAGE } from '../../const';
 import '../css/product-details-page.css';
 import QuantitySelector from './fragments/quantity-selector';
 import { numberWithCommas } from '../../utils/correct-money';
+import zStorage from '../../storage/storage';
 
 class ProductDetails extends React.Component {
     constructor(props) {
@@ -249,6 +250,7 @@ class ProductDetails extends React.Component {
             price: this.price,
             isEng: true,
         };
+        zStorage.addProductToCart(props);
         this.props.history.push(path, props);
     };
 

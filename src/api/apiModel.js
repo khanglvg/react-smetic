@@ -57,6 +57,23 @@ class APIModel {
             });
     };
 
+    getProductsByVendor = async (vendorId) => {
+        return fetch(`${apiUrl}/getProductsByVendor.php?vendorId='${vendorId}'`,
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                return data;
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    };
+
     getUser = async ({userId: userId}) => {
         return fetch(`${apiUrl}/getUser.php?userId='${userId}'`,
             {
@@ -132,7 +149,17 @@ class APIModel {
             .catch(error => {
                 console.log(error);
             });
+    };
 
+    getVendorsName = async () => {
+        return fetch(`${apiUrl}/getVendorsName.php`)
+            .then(response => response.json())
+            .then(data => {
+                return data;
+            })
+            .catch(error => {
+                console.log(error);
+            });
     };
 
     postOrder = async (orderData) => {
