@@ -3,6 +3,7 @@ import '../css/order-success.css';
 import { numberWithCommas } from '../../utils/correct-money';
 import LoadingScreen from 'react-loading-screen';
 import apiModel from '../../api/apiModel';
+import { Link } from 'react-router-dom';
 
 const UNKNOWN = 'Unknown value';
 
@@ -279,7 +280,8 @@ class OrderSuccess extends React.Component {
                                             }
                                         </h4>
                                     </div>
-                                    <div className={'col-6 p-0 d-flex align-items-center'}>
+                                    <div
+                                        className={'col-6 p-0 d-flex align-items-center'}>
                                         <h3>
                                             {productCount}
                                         </h3>
@@ -297,7 +299,8 @@ class OrderSuccess extends React.Component {
                                             }
                                         </h4>
                                     </div>
-                                    <div className={'col-6 p-0 d-flex align-items-center'}>
+                                    <div
+                                        className={'col-6 p-0 d-flex align-items-center'}>
                                         <h3>
                                             {numberWithCommas(productPrice)} đ
                                         </h3>
@@ -315,7 +318,8 @@ class OrderSuccess extends React.Component {
                                             }
                                         </h4>
                                     </div>
-                                    <div className={'col-8 p-0 d-flex align-items-center'}>
+                                    <div
+                                        className={'col-8 p-0 d-flex align-items-center'}>
                                         <h3 style={{color: 'red'}}>
                                             {numberWithCommas(totalPrice)} đ
                                         </h3>
@@ -327,13 +331,13 @@ class OrderSuccess extends React.Component {
 
                     <div
                         className={'w-100 d-flex justify-content-center align-items-center'}>
-                        <a href={'/'} style={{fontSize: '1.5rem'}}>
+                        <Link to={'/home'} style={{fontSize: '1.5rem'}}>
                             ← {
                             isEng ?
                                 'Back' :
                                 'Về trang chủ'
                         }
-                        </a>
+                        </Link>
                     </div>
 
                 </div>

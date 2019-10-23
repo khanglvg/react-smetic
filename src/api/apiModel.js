@@ -74,7 +74,24 @@ class APIModel {
             });
     };
 
-    getUser = async ({userId: userId}) => {
+    getAdmin = async ({adminId}) => {
+        return fetch(`${apiUrl}/getAdmin.php?adminId='${adminId}'`,
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                return data;
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    };
+
+    getUser = async ({userId}) => {
         return fetch(`${apiUrl}/getUser.php?userId='${userId}'`,
             {
                 headers: {

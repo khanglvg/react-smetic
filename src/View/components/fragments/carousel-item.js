@@ -4,7 +4,7 @@ import Icon from './icon.js';
 
 class CarouselItem extends React.Component{
     render() {
-        const {title, content} = this.props;
+        const {imgSrc, title, content} = this.props;
         return (
           <div
             className="container d-flex align-items-center p-0 main-slider-carousel-item-container">
@@ -12,7 +12,7 @@ class CarouselItem extends React.Component{
                   <div
                     className="col-5 main-slider-carousel-item-image-container">
                       <img
-                        src="http://z6z7q2p8.stackpathcdn.com/wp-content/uploads/revslider/home-01/slider2.png"
+                        src={imgSrc}
                         alt="cake-main-slider"/>
                   </div>
                   <div

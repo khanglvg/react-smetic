@@ -1,8 +1,15 @@
 import React from 'react';
 import '../css/header.css';
 import Icon from './fragments/icon';
-import { withRouter, Link } from 'react-router-dom';
+import {
+    Link,
+    withRouter,
+} from 'react-router-dom';
 import zStorage from '../../storage/storage';
+import apiModel from '../../api/apiModel';
+import { ROLE_ADMIN } from '../../utils/const';
+import fakeAuth from '../../fake-auth-data';
+import userConfig from '../../storage/user-config';
 
 const SEARCH_PATH = '/search-result';
 
@@ -10,14 +17,37 @@ class Header extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            isLoading: true,
             searchValue: '',
         };
         this.handleEnterEvent = this.handleEnterEvent.bind(this);
     }
 
-    componentDidMount() {
+    async componentDidMount() {
+        let temp = [];
+        if (userConfig.getRole() === ROLE_ADMIN) {
+            const adminId = userConfig.getAdminId();
+            console.log(adminId)
+            temp = await apiModel.getAdmin({adminId});
+        }
+        else {
+            const userId = userConfig.getUserId();
+            temp = await apiModel.getUser({userId});
+        }
+
+        if (temp) {
+            this.user = temp[0];
+        }
+        else {
+            this.user = {};
+        }
+
+        console.log(this.user)
         this.inputNode = document.getElementById('search-input');
         this.inputNode.addEventListener('keyup', this.handleEnterEvent);
+        this.setState({
+            isLoading: false,
+        });
     }
 
     componentWillUnmount() {
@@ -33,6 +63,15 @@ class Header extends React.Component {
     handleSearchValue = (e) => {
         this.setState({searchValue: e.target.value});
     };
+
+    handleLogOut() {
+        fakeAuth.signout(() => {
+            zStorage.clearStorage();
+            const a = document.createElement('a');
+            a.href = '/login';
+            a.click();
+        });
+    }
 
     handleSearch = () => {
         const arr = this.state.searchValue.split(';');
@@ -107,9 +146,20 @@ class Header extends React.Component {
         this.props.history.push(path);
     };
 
+    getUserName() {
+        if (!this.state.isLoading && this.user && this.user['HovaTen']) {
+            const arrName = this.user['HovaTen'].split(' ');
+            return arrName[arrName.length - 1];
+        }
+        else {
+            return 'Unknown';
+        }
+    }
+
     render() {
         const cartCount = zStorage.getCartCount();
         const {isEng} = this.props;
+        const role = userConfig.getRole();
         const {searchValue} = this.state;
         return (
             <header className="App-header">
@@ -117,12 +167,12 @@ class Header extends React.Component {
                     className="container-fluid d-flex header-container my-navbar">
                     <div
                         className="header-logo-container d-flex align-items-center">
-                        <a href="https://google.com.vn"
+                        <Link href="https://google.com.vn"
                            aria-label="Smetic">
                             <img
                                 src="https://www.upsieutoc.com/images/2019/09/26/nho.png"
                                 alt="Logo"/>
-                        </a>
+                        </Link>
                     </div>
                     <div className="row w-100 p-0 m-0">
 
@@ -132,9 +182,10 @@ class Header extends React.Component {
                                 <ul
                                     className="navbar-nav bd-navbar-nav flex-row justify-content-around align-items-center">
                                     <li className="nav-item">
-                                        <Link className="nav-link active"
-                                           to="/"
-                                           onClick="">
+                                        <Link
+                                            className="nav-link active"
+                                            to="/home"
+                                            onClick="">
                                             {
                                                 isEng ?
                                                     'Home' :
@@ -144,8 +195,8 @@ class Header extends React.Component {
                                     </li>
                                     <li
                                         className="nav-item dropdown header-content-menu">
-                                        <a className="nav-link "
-                                           href="/"
+                                        <Link className="nav-link "
+                                           to="/home"
                                            id="dropdownMenu"
                                            data-toggle="dropdown"
                                            aria-haspopup="true"
@@ -155,7 +206,7 @@ class Header extends React.Component {
                                                     'Menu' :
                                                     'Danh sách'
                                             }
-                                        </a>
+                                        </Link>
                                         <div
                                             className="dropdown-menu header-content-menu-dropdown"
                                             aria-labelledby="dropdownMenu">
@@ -163,53 +214,53 @@ class Header extends React.Component {
                                                 <div
                                                     className="col-4 p-0">
                                                     <div>
-                                                        <a className=""
-                                                           href="#">ABC</a>
+                                                        <Link className=""
+                                                              to={"/home"}>ABC</Link>
                                                     </div>
                                                     <div>
-                                                        <a className=""
-                                                           href="#">XYZ</a>
-                                                    </div>
-                                                </div>
-                                                <div
-                                                    className="col-4 p-0">
-                                                    <div>
-                                                        <a className=""
-                                                           href="#">ABC</a>
-                                                    </div>
-                                                    <div>
-                                                        <a className=""
-                                                           href="#">XYZ</a>
+                                                        <Link className=""
+                                                              to={"/home"}>XYZ</Link>
                                                     </div>
                                                 </div>
                                                 <div
                                                     className="col-4 p-0">
                                                     <div>
-                                                        <a className=""
-                                                           href="#">ABC</a>
+                                                        <Link className=""
+                                                              to={"/home"}>ABC</Link>
                                                     </div>
                                                     <div>
-                                                        <a className=""
-                                                           href="#">XYZ</a>
+                                                        <Link className=""
+                                                              to={"/home"}>XYZ</Link>
+                                                    </div>
+                                                </div>
+                                                <div
+                                                    className="col-4 p-0">
+                                                    <div>
+                                                        <Link className=""
+                                                              to={"/home"}>ABC</Link>
+                                                    </div>
+                                                    <div>
+                                                        <Link className=""
+                                                              to={"/home"}>XYZ</Link>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </li>
                                     <li className="nav-item">
-                                        <a className="nav-link "
-                                           href="/"
+                                        <Link className="nav-link "
+                                           to={"/home"}
                                            onClick="ga('send', 'event', 'Navbar', 'Community links', 'Examples');">
                                             {
                                                 isEng ?
                                                     'About Us' :
                                                     'Về chúng tôi'
                                             }
-                                        </a>
+                                        </Link>
                                     </li>
                                     <li className="nav-item">
-                                        <a className="nav-link"
-                                           href="/"
+                                        <Link className="nav-link"
+                                           to={"/home"}
                                            onClick="ga('send', 'event', 'Navbar', 'Community links', 'Themes');"
                                            target="_blank"
                                            rel="noopener">{
@@ -217,7 +268,7 @@ class Header extends React.Component {
                                                 'Contact Us' :
                                                 'Liên hệ'
                                         }
-                                        </a>
+                                        </Link>
                                     </li>
                                 </ul>
                             </div>
@@ -302,9 +353,7 @@ class Header extends React.Component {
                                             color={'white'}/>
                                         <span>
                                             {
-                                                isEng ?
-                                                    'My account' :
-                                                    'Tài khoản'
+                                                this.getUserName()
                                             }
                                     </span>
                                         <Icon
@@ -315,27 +364,50 @@ class Header extends React.Component {
                                     </button>
                                     <div className="dropdown-menu"
                                          aria-labelledby="dropdownMenuButton">
-                                        <a className="dropdown-item"
-                                           href="#">
-                                            {isEng ?
-                                                'My account' :
-                                                'Tài khoản của tôi'}
-                                        </a>
-                                        <Link className="dropdown-item"
-                                           to="/checkout">{isEng ?
-                                            'My orders' :
-                                            'Giỏ hàng của tôi'}</Link>
+                                        {
+                                            role === ROLE_ADMIN ?
+                                                <Link
+                                                    className="dropdown-item"
+                                                    to="/order-report/">
+                                                    {isEng ?
+                                                        'Orders management' :
+                                                        'Quản lý đơn hàng'}
+                                                </Link>
+                                                :
+                                                null
+                                        }
+                                        {
+                                            role === ROLE_ADMIN ?
+                                                <Link
+                                                    className="dropdown-item"
+                                                    to="/product-report/">
+                                                    {isEng ?
+                                                        'Products by vendor management' :
+                                                        'Qyản Lý sản phẩm theo vendor'}
+                                                </Link>
+                                                :
+                                                null
+                                        }
+                                        {
+                                            role !== ROLE_ADMIN ?
+                                                <Link className="dropdown-item"
+                                                      to="/checkout">{isEng ?
+                                                    'My orders' :
+                                                    'Giỏ hàng của tôi'}</Link>
+                                                :
+                                                null
+                                        }
                                         <div
-                                            className="dropdown-divider"></div>
-                                        <a
+                                            className="dropdown-divider"/>
+                                        <button
                                             className="color-red dropdown-item"
-                                            href="#">
+                                            onClick={this.handleLogOut.bind(this)}>
                                             {
                                                 isEng ?
                                                     'Log out' :
                                                     'Đăng xuất'
                                             }
-                                        </a>
+                                        </button>
                                     </div>
                                 </div>
                             </div>

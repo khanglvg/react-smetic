@@ -9,8 +9,16 @@ class MainSliderCard extends React.Component{
             className="col-4 d-flex align-items-center main-slider-info-card-content-container">
               <div
                 className="d-flex w-100 justify-content-center align-items-center">
-                  <div className="col-4 p-0">
+                  <div className="col-4 p-0" style={{
+                      maxHeight: '150px',
+                      maxWidth: '150px',
+                      overflow: 'hidden'
+                  }}>
                       <img
+                          style={{
+                              width: '100%',
+                              height: '100%'
+                          }}
                         src={imgSrc}
                         alt="abc"/>
                   </div>

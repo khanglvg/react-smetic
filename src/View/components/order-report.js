@@ -3,7 +3,8 @@ import LoadingScreen from 'react-loading-screen';
 import apiModel from '../../api/apiModel';
 import '../css/order-report.css';
 import OrderStatusCard from './fragments/order-status-card';
-import { DEFAULT_IMAGE } from '../../const';
+import { DEFAULT_IMAGE } from '../../utils/const';
+import { Link } from 'react-router-dom';
 
 const UNKNOWN = 'Unknown Value';
 const CODE_GET_ALL = 4101997;
@@ -43,6 +44,9 @@ class OrderReport extends React.Component {
             currentOrderId: '',
             orderStatus: inputStatus, // get status of order: 0 -> chưa giao, 1 -> đã giao, 2 -> đã xác nhận
         };
+
+        this.oldKey = '';
+
         this.handleClick = this.handleClick.bind(this);
         this.onClickConfirm = this.onClickConfirm.bind(this);
     }
@@ -58,17 +62,20 @@ class OrderReport extends React.Component {
     };
 
     async handleClick() {
-        const id = this.state.currentOrderId;
-        const res = await apiModel.updateOrder({
-            orderId: id,
-            orderStatus: 2,
-        }).then(() => true);
-
-        if (res === true) {
-            const a = document.createElement('a');
-            a.href = `/order-report/${this.state.orderStatus}`;
-            a.click();
-        }
+        // const id = this.state.currentOrderId;
+        // // const res = await apiModel.updateOrder({
+        // //     orderId: id,
+        // //     orderStatus: 2,
+        // // }).then(() => true);
+        // const res = true;
+        //
+        // if (res === true) {
+        //     // TODO: refresh page
+        //     this.props.history.push('/');
+        //     this.props.history.push(`/order-report/${this.state.orderStatus}`);
+        //     console.log(this.props.history.replace(`/order-report/${this.state.orderStatus}`));
+        //     //this.props.location.reload();
+        // }
     };
 
     getModelContent = () => {
@@ -79,12 +86,11 @@ class OrderReport extends React.Component {
                 <div className={'w-100 d-flex align-items-center'}>
                     <h5 className={'mb-0 mr-1'}>
                         Confirm order
-                        <a href={`/order-success/${orderId}`}
-                           target={'_blank'}
+                        <Link to={`/order-success/${orderId}`}
                            className={'remove-underline ml-1 mr-1'}
                            style={{fontSize: '1.25rem'}}>
                             {orderId}
-                        </a>
+                        </Link>
                         has done!
                     </h5>
                 </div>
@@ -95,12 +101,12 @@ class OrderReport extends React.Component {
                 <div className={'w-100 d-flex align-items-center'}>
                     <h5 className={'mb-0 mr-1'}>
                         Xác nhận đơn hàng
-                        <a href={`/order-success/${orderId}`}
-                           target={'_blank'}
-                           className={'remove-underline ml-1 mr-1'}
-                           style={{fontSize: '1.25rem'}}>
+                        <Link to={`/order-success/${orderId}`}
+                              target={'_blank'}
+                              className={'remove-underline ml-1 mr-1'}
+                              style={{fontSize: '1.25rem'}}>
                             {orderId}
-                        </a>
+                        </Link>
                         hoàn thành!
                     </h5>
                 </div>
@@ -229,6 +235,13 @@ class OrderReport extends React.Component {
     render() {
         const {isLoading, orderStatus} = this.state;
         const {isEng} = this.props;
+
+        // For refresh page
+        if (!this.state.isLoading && this.props.location.key !== this.oldKey) {
+            this.oldKey = this.props.location.key;
+            console.log('reload')
+            this.forceUpdate();
+        }
 
         return (
             <div className={'w-100 h-100 order-report-cover'}>

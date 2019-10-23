@@ -3,7 +3,7 @@ import '../css/product-report.css';
 import LoadingScreen from 'react-loading-screen';
 import apiModel from '../../api/apiModel';
 import ProductReportCard from './fragments/product-report-card';
-import { DEFAULT_IMAGE } from '../../const';
+import { DEFAULT_IMAGE } from '../../utils/const';
 
 const UNKNOWN = 'Unknown Value';
 

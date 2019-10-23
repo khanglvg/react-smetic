@@ -1,6 +1,6 @@
 import React from 'react';
 import apiModel from '../../api/apiModel';
-import { DEFAULT_IMAGE } from '../../const';
+import { DEFAULT_IMAGE } from '../../utils/const';
 import '../css/product-details-page.css';
 import QuantitySelector from './fragments/quantity-selector';
 import { numberWithCommas } from '../../utils/correct-money';

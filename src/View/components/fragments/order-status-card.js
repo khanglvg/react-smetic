@@ -2,6 +2,7 @@ import React from 'react';
 import '../../css/order-status-card.css';
 import { numberWithCommas } from '../../../utils/correct-money';
 import Icon from './icon';
+import { Link } from 'react-router-dom';
 import { getDisplayTime } from '../../../utils/converter';
 
 class OrderStatusCard extends React.Component {
@@ -130,8 +131,9 @@ class OrderStatusCard extends React.Component {
                 <div className={'w-100 pt-2'}>
                     <div
                         className={'w-100 d-flex justify-content-between align-items-center'}>
-                        <a href={`/order-success/${orderId}`} className={'m-0'}
-                           style={{fontSize: '1.75rem'}}># {orderId}</a>
+                        <Link to={`/order-success/${orderId}`}
+                              className={'m-0'}
+                              style={{fontSize: '1.75rem'}}># {orderId}</Link>
                         <div
                             className={'d-flex justify-content-end pr-4'}
                             style={{
@@ -165,11 +167,10 @@ class OrderStatusCard extends React.Component {
                                     </p>
                                 </div>
                                 <div className={'col-9 p-0'}>
-                                    <a style={{fontSize: '1.2rem'}}
-                                       href={`/product/${productId}`}
-                                       target="_blank">
+                                    <Link style={{fontSize: '1.2rem'}}
+                                       to={`/product/${productId}`}>
                                         {productName}
-                                    </a>
+                                    </Link>
                                 </div>
                             </div>
 
@@ -197,9 +198,9 @@ class OrderStatusCard extends React.Component {
                                             </p>
                                         </div>
                                         <div className={'col-3 p-0'}>
-                                            <a style={{color: 'black'}}
-                                               href={`tel: +84${userPhone}`}
-                                               className={'m-0'}>{userPhone}</a>
+                                            <Link style={{color: 'black'}}
+                                               to={`tel: +84${userPhone}`}
+                                               className={'m-0'}>{userPhone}</Link>
                                         </div>
                                     </div>
                                 </div>

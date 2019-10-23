@@ -86,9 +86,10 @@ class CheckoutConfirmation extends React.Component {
     };
 
     goToOrderSuccessPage(orderId) {
-        const a = document.createElement('a');
-        a.href = `/order-success/${orderId}`;
-        a.click();
+        const {history} = this.props;
+        if(history) {
+            history.push(`/order-success/${orderId}`);
+        }
     }
 
     handleUserPhoneChange = (e) => {

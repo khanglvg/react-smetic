@@ -22,9 +22,12 @@ class ZStorage {
     addProductToCart(productCart) {
         if (productCart && productCart.productId) {
             console.log(this.__CART__);
-            this.__CART__[this._userId][productCart.productId] = productCart;
-            sessionStorage.setItem(CART_KEY, JSON.stringify(this.__CART__));
-            return true;
+            if(this.__CART__[this._userId]){
+                this.__CART__[this._userId][productCart.productId] = productCart;
+                sessionStorage.setItem(CART_KEY, JSON.stringify(this.__CART__));
+                return true;
+            }
+            return false;
         }
         return false;
     }
@@ -43,7 +46,14 @@ class ZStorage {
         if (!obj) {
             return {};
         }
-        return obj[this._userId];
+
+        if (obj[this._userId]) {
+            return obj[this._userId];
+        }
+        else {
+            return {};
+        }
+
     }
 
     getCartCount() {

@@ -2,7 +2,7 @@ import React from 'react';
 import apiModel from '../../api/apiModel';
 import ProductCard from './fragments/product-card';
 import NotFound from './not-found';
-import { DEFAULT_IMAGE } from '../../const';
+import { DEFAULT_IMAGE } from '../../utils/const';
 import { withRouter } from 'react-router-dom';
 import LoadingScreen from 'react-loading-screen';
 
@@ -100,7 +100,7 @@ class SearchResults extends React.Component {
                 for (let i = 0; i < filterAge.length; i++) {
                     const productId = filterAge[i]['MaSP'];
 
-                    const imgScr = filterAge[i]['HinhAnh'] ?
+                    const imgSrc = filterAge[i]['HinhAnh'] ?
                         filterAge[i]['HinhAnh'] :
                         DEFAULT_IMAGE;
 
@@ -119,7 +119,7 @@ class SearchResults extends React.Component {
                     res.push(
                         <ProductCard
                             productId={productId}
-                            imgSrc={imgScr}
+                            imgSrc={imgSrc}
                             productName={productName}
                             vendorName={vendorName}
                             price={price}

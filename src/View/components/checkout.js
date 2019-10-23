@@ -5,6 +5,7 @@ import { withRouter } from 'react-router-dom';
 import '../css/checkout.css';
 import zStorage from '../../storage/storage';
 import NotFound from './not-found';
+import userConfig from '../../storage/user-config';
 
 class Checkout extends React.Component {
     constructor(props) {
@@ -106,12 +107,14 @@ class Checkout extends React.Component {
         if (this) {
             let path = `/checkout/confirmation`;
             const {productId, productQuantity, price} = this.infoToPush;
+            let userId = userConfig.getUserId();
+            if(!userId) userId = 'SM-133';
             const props = {
                 productId: productId,
                 productPrice: price,
                 totalPrice: this.totalPrice,
                 productCount: productQuantity,
-                userId: 'SM-133',
+                userId: userId,
             };
             this.props.history.push(path, props);
         }
