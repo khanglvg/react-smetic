@@ -11,7 +11,7 @@ class ProductReport extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            currentVendorId: '',
+            currentVendorId: undefined,
             isLoading: true,
         };
         this.listVendors = [];
@@ -43,6 +43,7 @@ class ProductReport extends React.Component {
     }
 
     handleChangeVendor = (e) => {
+        console.log(e.target.value)
         this.setState({
             currentVendorId: e.target.value,
             isLoading: true,
@@ -53,8 +54,8 @@ class ProductReport extends React.Component {
 
     async getData() {
         const {currentVendorId} = this.state;
-        if (currentVendorId !== undefined || currentVendorId !== '') {
-            this.data = await apiModel.getProductsByVendor(this.listVendors[0]['MaVendor']);
+        if (currentVendorId !== undefined && currentVendorId !== '') {
+            this.data = await apiModel.getProductsByVendor(currentVendorId);
         }
         else if (currentVendorId === '') {
             console.log('b');
@@ -62,6 +63,8 @@ class ProductReport extends React.Component {
                 console.log('c');
                 this.data = await apiModel.getProductsByVendor(this.listVendors[0]['MaVendor']);
             }
+        } else if (currentVendorId === undefined) {
+            this.data = await apiModel.getProductsByVendor(this.listVendors[0]['MaVendor']);
         }
 
         setTimeout(() => {

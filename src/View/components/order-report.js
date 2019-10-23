@@ -86,11 +86,11 @@ class OrderReport extends React.Component {
                 <div className={'w-100 d-flex align-items-center'}>
                     <h5 className={'mb-0 mr-1'}>
                         Confirm order
-                        <Link to={`/order-success/${orderId}`}
-                              className={'remove-underline ml-1 mr-1'}
-                              style={{fontSize: '1.25rem'}}>
+                        <a href={`/order-success/${orderId}`}
+                           className={'remove-underline ml-1 mr-1'}
+                           style={{fontSize: '1.25rem'}}>
                             {orderId}
-                        </Link>
+                        </a>
                         has done!
                     </h5>
                 </div>
