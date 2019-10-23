@@ -4,8 +4,8 @@ import {
     ROLE_ADMIN,
     ROLE_USER,
 } from '../../utils/const';
-import fakeAuth from '../../fake-auth-data';
 import userConfig from '../../storage/user-config';
+import zStorage from '../../storage/storage';
 
 class LoginPage extends React.Component {
     constructor(props) {
@@ -52,21 +52,19 @@ class LoginPage extends React.Component {
         const {userName, password} = this.state;
         if (userName === 'phamvy' && password === '123456') {
             // callback login thanh cong w admin
-            fakeAuth.authenticate(() => {
-                const userId = 'SA-01';
-                userConfig.setAdminId(userId);
-                userConfig.setRole(ROLE_ADMIN);
-                history.push('/home');
-            });
+            zStorage.setAuth(true);
+            const userId = 'SA-01';
+            userConfig.setAdminId(userId);
+            userConfig.setRole(ROLE_ADMIN);
+            history.push('/home');
         }
         else if (userName === 'levogiakhang' && password === '123456') {
             // callback login thanh cong w user
-            fakeAuth.authenticate(() => {
-                const userId = 'SM-0410';
-                userConfig.setUserId(userId);
-                userConfig.setRole(ROLE_USER);
-                history.push('/home');
-            });
+            zStorage.setAuth(true);
+            const userId = 'SM-0410';
+            userConfig.setUserId(userId);
+            userConfig.setRole(ROLE_USER);
+            history.push('/home');
         }
         else {
             this.setState({isShowError: true});

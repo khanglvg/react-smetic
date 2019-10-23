@@ -24,13 +24,14 @@ class ProductReport extends React.Component {
         catch (e) {
             console.log(e);
         }
-
         if (this.listVendors.length >= 1) {
-            this.getData();
-            this.setState({
-                currentVendorId: this.listVendors[0]['MaVendor'],
-                isLoading: false,
-            });
+            await this.getData();
+            setTimeout(() => {
+                this.setState({
+                    currentVendorId: this.listVendors[0]['MaVendor'],
+                    isLoading: false,
+                });
+            }, 500);
         }
         else {
             setTimeout(() => {
@@ -53,8 +54,7 @@ class ProductReport extends React.Component {
     async getData() {
         const {currentVendorId} = this.state;
         if (currentVendorId !== undefined || currentVendorId !== '') {
-            console.log('a');
-            this.data = await apiModel.getProductsByVendor(currentVendorId);
+            this.data = await apiModel.getProductsByVendor(this.listVendors[0]['MaVendor']);
         }
         else if (currentVendorId === '') {
             console.log('b');
@@ -88,7 +88,7 @@ class ProductReport extends React.Component {
         if (Array.isArray(this.data)) {
             const {isEng} = this.props;
             res = this.data.map(function (vendor) {
-                const imgScr = vendor['HinhAnh'] ?
+                const imgSrc = vendor['HinhAnh'] ?
                     vendor['HinhAnh'] :
                     DEFAULT_IMAGE;
 
@@ -136,7 +136,7 @@ class ProductReport extends React.Component {
                 return (
                     <div className={'w-100 mt-3'}>
                         <ProductReportCard
-                            imgScr={imgScr}
+                            imgSrc={imgSrc}
                             productId={productId}
                             productName={productName}
                             description={description}

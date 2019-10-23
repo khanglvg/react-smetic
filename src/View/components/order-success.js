@@ -42,34 +42,36 @@ class OrderSuccess extends React.Component {
             productPrice = UNKNOWN,
             totalPrice = UNKNOWN;
 
-        const props = this.data[0];
-        if (props) {
-            if (props['MaDH']) {
-                orderId = props['MaDH'];
-            }
-            if (props['HovaTen']) {
-                userName = props['HovaTen'];
-            }
-            if (props['Sdt']) {
-                userPhone = props['Sdt'];
-            }
-            if (props['DiaChiGiaoHang']) {
-                deliveryAddress = props['DiaChiGiaoHang'];
-            }
-            if (props['TenSP']) {
-                productName = props['TenSP'];
-            }
-            if (props['TenVendor']) {
-                vendorName = props['TenVendor'];
-            }
-            if (props['SoLuong']) {
-                productCount = props['SoLuong'];
-            }
-            if (props['GiaBan']) {
-                productPrice = props['GiaBan'];
-            }
-            if (props['TongGiaTriDH']) {
-                totalPrice = props['TongGiaTriDH'];
+        if (this.data) {
+            const props = this.data[0];
+            if (props) {
+                if (props['MaDH']) {
+                    orderId = props['MaDH'];
+                }
+                if (props['HovaTen']) {
+                    userName = props['HovaTen'];
+                }
+                if (props['Sdt']) {
+                    userPhone = props['Sdt'];
+                }
+                if (props['DiaChiGiaoHang']) {
+                    deliveryAddress = props['DiaChiGiaoHang'];
+                }
+                if (props['TenSP']) {
+                    productName = props['TenSP'];
+                }
+                if (props['TenVendor']) {
+                    vendorName = props['TenVendor'];
+                }
+                if (props['SoLuong']) {
+                    productCount = props['SoLuong'];
+                }
+                if (props['GiaBan']) {
+                    productPrice = props['GiaBan'];
+                }
+                if (props['TongGiaTriDH']) {
+                    totalPrice = props['TongGiaTriDH'];
+                }
             }
         }
 

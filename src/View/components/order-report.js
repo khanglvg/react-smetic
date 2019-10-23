@@ -62,20 +62,20 @@ class OrderReport extends React.Component {
     };
 
     async handleClick() {
-        // const id = this.state.currentOrderId;
-        // // const res = await apiModel.updateOrder({
-        // //     orderId: id,
-        // //     orderStatus: 2,
-        // // }).then(() => true);
-        // const res = true;
-        //
-        // if (res === true) {
-        //     // TODO: refresh page
-        //     this.props.history.push('/');
-        //     this.props.history.push(`/order-report/${this.state.orderStatus}`);
-        //     console.log(this.props.history.replace(`/order-report/${this.state.orderStatus}`));
-        //     //this.props.location.reload();
-        // }
+        const id = this.state.currentOrderId;
+        const res = await apiModel.updateOrder({
+            orderId: id,
+            orderStatus: 2,
+        }).then(() => true);
+
+        if (res === true) {
+            const a = document.createElement('a');
+            a.href = `/order-report/${this.state.orderStatus}`;
+            a.click();
+        }
+        else {
+            alert('Confirm order failed');
+        }
     };
 
     getModelContent = () => {
@@ -87,8 +87,8 @@ class OrderReport extends React.Component {
                     <h5 className={'mb-0 mr-1'}>
                         Confirm order
                         <Link to={`/order-success/${orderId}`}
-                           className={'remove-underline ml-1 mr-1'}
-                           style={{fontSize: '1.25rem'}}>
+                              className={'remove-underline ml-1 mr-1'}
+                              style={{fontSize: '1.25rem'}}>
                             {orderId}
                         </Link>
                         has done!
@@ -239,7 +239,7 @@ class OrderReport extends React.Component {
         // For refresh page
         if (!this.state.isLoading && this.props.location.key !== this.oldKey) {
             this.oldKey = this.props.location.key;
-            console.log('reload')
+            console.log('reload');
             this.forceUpdate();
         }
 
@@ -335,6 +335,7 @@ class OrderReport extends React.Component {
                                     </button>
                                     <button type="button"
                                             onClick={this.handleClick}
+                                            data-dismiss="modal"
                                             className="btn confirm remove-outline">
                                         {
                                             isEng ?

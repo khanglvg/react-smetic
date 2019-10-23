@@ -1,5 +1,6 @@
 import userConfig from './user-config';
 
+const IS_AUTH = 'isAuth';
 const CART_KEY = 'smetic-customer-cart';
 
 class ZStorage {
@@ -22,7 +23,7 @@ class ZStorage {
     addProductToCart(productCart) {
         if (productCart && productCart.productId) {
             console.log(this.__CART__);
-            if(this.__CART__[this._userId]){
+            if (this.__CART__[this._userId]) {
                 this.__CART__[this._userId][productCart.productId] = productCart;
                 sessionStorage.setItem(CART_KEY, JSON.stringify(this.__CART__));
                 return true;
@@ -74,6 +75,14 @@ class ZStorage {
 
     clearStorage() {
         sessionStorage.clear();
+    }
+
+    getAuth() {
+        return sessionStorage.getItem(IS_AUTH);
+    }
+
+    setAuth(isAuth) {
+        sessionStorage.setItem(IS_AUTH, JSON.stringify(isAuth));
     }
 }
 

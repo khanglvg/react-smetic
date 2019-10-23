@@ -19,6 +19,7 @@ import NotFound from './View/components/not-found';
 import Header from './View/components/header';
 import Footer from './View/components/footer';
 import LoginPage from './View/components/login-page';
+import zStorage from './storage/storage';
 
 
 export default function Authentication() {
@@ -37,12 +38,13 @@ export default function Authentication() {
 
 function PrivateRoute({children, ...rest}) {
     console.log(rest);
+    console.log(zStorage.getAuth())
     return (
         <Route
             {...rest}
             render={({location}) => {
                 return (
-                    fakeAuth.isAuthenticated ?
+                    zStorage.getAuth() === "true" ?
                         <Router>
                             <Header isEng={isEng}/>
                             <Switch>

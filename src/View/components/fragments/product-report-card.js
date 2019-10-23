@@ -1,10 +1,16 @@
 import React from 'react';
 import '../../css/product-report-card.css';
+import { Link } from 'react-router-dom';
 
 class ProductReportCard extends React.Component {
+    handleImgClick = () => {
+        const a = document.getElementById(`/product/${this.props.productId}`);
+        a.click();
+    };
+
     render() {
         const {
-            imgScr,
+            imgSrc,
             productId,
             productName,
             description,
@@ -31,7 +37,7 @@ class ProductReportCard extends React.Component {
                             borderRadius: '5px',
                             cursor: 'pointer',
                         }}
-                        src={imgScr}
+                        src={imgSrc}
                         onClick={this.handleImgClick}
                         alt={'order status card'}/>
                 </div>
@@ -39,13 +45,14 @@ class ProductReportCard extends React.Component {
                 <div className={'w-100 pt-2'}>
                     <div
                         className={'w-100 d-flex justify-content-start align-items-center'}>
-                        <a href={`/product/${productId}`}
-                           className={'m-0'}
-                           style={{fontSize: '1.75rem'}}>#
+                        <Link to={`/product/${productId}`}
+                              id={`/product/${productId}`}
+                              className={'m-0'}
+                              style={{fontSize: '1.75rem'}}>#
                             {
                                 productName
                             }
-                        </a>
+                        </Link>
                     </div>
 
                     <div className={'w-100'}>
@@ -67,7 +74,8 @@ class ProductReportCard extends React.Component {
                         </div>
 
                         <div className={'w-100 d-flex mt-3'}>
-                            <div className={'col-2 p-0 d-flex align-items-center'}>
+                            <div
+                                className={'col-2 p-0 d-flex align-items-center'}>
                                 <div className={'w-100 d-flex'}>
                                     <p className={'m-0 font-italic'}>
                                         {isEng ?
@@ -79,14 +87,16 @@ class ProductReportCard extends React.Component {
                             <div className={'col-9 p-0'}>
                                 <div
                                     className={'w-100 d-flex justify-content-between'}>
-                                    <div className={'col-5 p-0 d-flex align-items-center'}>
+                                    <div
+                                        className={'col-5 p-0 d-flex align-items-center'}>
                                         <p className={'m-0'}>
                                             {
                                                 productType
                                             }
                                         </p>
                                     </div>
-                                    <div className={'col-2 p-0 d-flex align-items-center'}>
+                                    <div
+                                        className={'col-2 p-0 d-flex align-items-center'}>
                                         <p className={'m-0 font-italic'}>
                                             {isEng ?
                                                 'Skin type:' :
@@ -107,7 +117,8 @@ class ProductReportCard extends React.Component {
                     </div>
 
                     <div className={'w-100 d-flex mt-3'}>
-                        <div className={'col-2 p-0 d-flex align-items-center'}>
+                        <div
+                            className={'col-2 p-0 d-flex align-items-center'}>
                             <div className={'w-100 d-flex'}>
                                 <p className={'m-0 font-italic'}>
                                     {isEng ?
@@ -119,14 +130,16 @@ class ProductReportCard extends React.Component {
                         <div className={'col-9 p-0'}>
                             <div
                                 className={'w-100 d-flex justify-content-between'}>
-                                <div className={'col-5 p-0 d-flex align-items-center'}>
+                                <div
+                                    className={'col-5 p-0 d-flex align-items-center'}>
                                     <p className={'m-0'}>
                                         {
                                             gender
                                         }
                                     </p>
                                 </div>
-                                <div className={'col-2 p-0 d-flex align-items-center'}>
+                                <div
+                                    className={'col-2 p-0 d-flex align-items-center'}>
                                     <p className={'m-0 font-italic'}>
                                         {isEng ?
                                             'Age range:' :
